@@ -3,7 +3,8 @@
 The test suites operate the production SwiftUI controls through XCTest. They do
 not install hooks or add control endpoints to the application. They use
 Foundation launch-argument defaults to select English and suppress automatic
-model startup only within the launched process.
+model startup only within the launched process. Real-model suites explicitly
+override cloud mode off for that process, without altering saved cloud preferences.
 
 Generate the project, then run the first-run suite before completing setup:
 
@@ -78,3 +79,15 @@ Sparkle feed advertising signed version 0.1.1. It starts the real sidecar, uses
 Check for Updates and Sparkle's install controls, verifies the installed version
 and relaunch path, and checks that the old sidecar exited. Do not run it against
 an unpublished feed or during another model task.
+
+`InHouseAgentModernUI` checks Japanese navigation, a synthetic real-model file
+listing, thinking availability, nested tool results, conversation search,
+read-only history, and restoration after relaunch. LiteRT's current SDK does not
+provide thinking text; this suite checks the explicit unavailable state, not a
+fabricated reasoning transcript. Its saved-conversation diagnostic skips if no
+recent synthetic `UI-` fixture exists, and never dumps an unrelated conversation.
+
+`InHouseAgentSystemNotificationUI` is an explicit OS-settings diagnostic. It may
+only change In-House Agent's notification permission and is not part of other
+schemes. macOS control labels vary; inability to identify the permission switch
+must be reported rather than treating the settings request as delivery proof.

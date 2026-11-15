@@ -56,7 +56,7 @@ async def test_public_thought_text_is_capped_and_signature_not_forwarded():
 
 
 @pytest.mark.asyncio
-@pytest.mark.parametrize("result_step", ["trajectory:1", None])
+@pytest.mark.parametrize("result_step", ["trajectory:1", "trajectory:2", None])
 async def test_builtin_step_id_and_post_hook_call_id_share_one_activity(result_step):
     from google.antigravity.types import Text, ToolCall, ToolResult
     backend = SDKBackend(BackendConfig("unused", "/tmp"), lambda call: False)
@@ -83,7 +83,8 @@ async def test_builtin_step_id_and_post_hook_call_id_share_one_activity(result_s
 
 
 @pytest.mark.asyncio
-async def test_parallel_same_name_calls_are_not_guessed_by_name():
+@pytest.mark.parametrize("result_step", [None, "trajectory:3", "other-trajectory:1"])
+async def test_parallel_same_name_calls_are_not_guessed_by_name(result_step):
     from google.antigravity.types import ToolCall, ToolResult
     backend = SDKBackend(BackendConfig("unused", "/tmp"), lambda call: False)
     class Response:
@@ -92,7 +93,7 @@ async def test_parallel_same_name_calls_are_not_guessed_by_name():
             async def events():
                 yield ToolCall(name="list_directory", id="trajectory:1", step_id="trajectory:1")
                 yield ToolCall(name="list_directory", id="trajectory:2", step_id="trajectory:2")
-                yield ToolResult(name="list_directory", id="unmatched-call", result="result")
+                yield ToolResult(name="list_directory", id="unmatched-call", step_id=result_step, result="result")
             return events()
     class Agent:
         async def chat(self, prompt): return Response()
@@ -132,3 +133,47 @@ async def test_post_hook_before_call_preserves_late_args_and_terminal_status(err
         assert row["error"] == error
     else:
         assert "alpha.txt" in row["result"]
+
+
+@pytest.mark.asyncio
+async def test_shifted_hook_step_does_not_alias_the_next_call():
+    from google.antigravity.types import ToolCall, ToolResult
+    backend = SDKBackend(BackendConfig('unused', '/tmp'), lambda call: False)
+    class Response:
+        @property
+        def chunks(self):
+            async def events():
+                for index in (1, 2):
+                    yield ToolCall(name='list_directory', id=f'trajectory:{index}', step_id=f'trajectory:{index}', args={'path': f'/tmp/{index}'})
+                    yield ToolResult(name='list_directory', id=f'call_{index}', step_id=f'trajectory:{index + 1}', result=f'result {index}')
+            return events()
+    class Agent:
+        async def chat(self, prompt): return Response()
+    backend.agent = Agent()
+    rows = {}
+    async for event in backend.stream('fixture'):
+        rows.setdefault(event['id'], {}).update(event)
+    assert set(rows) == {'trajectory:1', 'trajectory:2'}
+    for index in (1, 2):
+        row = rows[f'trajectory:{index}']
+        assert row['status'] == 'completed'
+        assert f'/tmp/{index}' in row['args']
+        assert row['result'] == f'result {index}'
+
+
+@pytest.mark.asyncio
+async def test_single_pending_call_from_other_trajectory_is_not_guessed():
+    from google.antigravity.types import ToolCall, ToolResult
+    backend = SDKBackend(BackendConfig('unused', '/tmp'), lambda call: False)
+    class Response:
+        @property
+        def chunks(self):
+            async def events():
+                yield ToolCall(name='list_directory', id='first:1', step_id='first:1')
+                yield ToolResult(name='list_directory', id='native-call', step_id='other:2', result='fixture')
+            return events()
+    class Agent:
+        async def chat(self, prompt): return Response()
+    backend.agent = Agent()
+    events = [event async for event in backend.stream('fixture')]
+    assert [event['id'] for event in events] == ['first:1', 'native-call']

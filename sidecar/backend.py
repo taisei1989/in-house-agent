@@ -171,15 +171,28 @@ class SDKBackend:
             keys = [value for value in (result.id, result.step_id) if value]
             matches = {aliases[key] for key in keys if key in aliases}
             identifier = next(iter(matches)) if len(matches) == 1 else None
-            if identifier is None and not matches and not result.step_id:
+            inferred = False
+            if identifier is None and not matches:
+                # LiteRT 0.1.23 emits the built-in call at trajectory:N,
+                # but its post-tool hook at trajectory:N+1. Never assume an
+                # offset: allow only one matching pending operation within
+                # the same trajectory (or a hook with no step metadata).
                 candidates = [key for key, call in pending_calls.items()
-                              if call["name"] == str(result.name) and call["server_name"] == result.server_name]
+                              if call["name"] == str(result.name) and call["server_name"] == result.server_name
+                              and (not result.step_id or (call["step_id"]
+                                   and ":" in call["step_id"] and ":" in result.step_id
+                                   and call["step_id"].rsplit(":", 1)[0] == result.step_id.rsplit(":", 1)[0]))]
                 if len(candidates) == 1:
                     identifier = candidates[0]
+                    inferred = True
             if identifier is None:
                 identifier = result.id or result.step_id or str(uuid.uuid4())
             if len(matches) <= 1:
                 for key in keys:
+                    # A shifted hook step may become the next call's step.
+                    # Bind only its real call id when using the fallback.
+                    if inferred and key != result.id:
+                        continue
                     aliases.setdefault(key, identifier)
             key = (identifier, str(result.name))
             if key in emitted:
@@ -232,7 +245,8 @@ class SDKBackend:
                             yield {"type": "tool", "id": identifier, "name": str(chunk.name),
                                    "args": args, "status": terminal_states[identifier], "truncated": truncated}
                         continue
-                    pending_calls[identifier] = {"name": str(chunk.name), "server_name": chunk.server_name}
+                    pending_calls[identifier] = {"name": str(chunk.name), "server_name": chunk.server_name,
+                                                 "step_id": chunk.step_id}
                     emitted_args[identifier] = args
                     yield {"type": "tool", "id": identifier, "name": str(chunk.name),
                            "args": args, "status": "running", "truncated": truncated}

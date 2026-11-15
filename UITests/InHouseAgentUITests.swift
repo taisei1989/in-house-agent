@@ -28,7 +28,7 @@ final class ScaffoldUITests: XCTestCase {
         let app = XCUIApplication()
         // These are Foundation's standard, process-local preference overrides.
         // They do not modify the user's persisted settings.
-        app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US", "-autoStartServer", "NO"]
+        app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US", "-autoStartServer", "NO", "-allowCloud", "NO"]
         app.launch()
         app.activate()
         XCTAssertTrue(app.wait(for: .runningForeground, timeout: 10))
@@ -68,7 +68,7 @@ final class RuntimeUITests: XCTestCase {
     func testStreamingAndWriteApproval() throws {
         continueAfterFailure = false
         let app = XCUIApplication()
-        app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US", "-autoStartServer", "NO"]
+        app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US", "-autoStartServer", "NO", "-allowCloud", "NO"]
         let workspace = FileManager.default.temporaryDirectory
             .appendingPathComponent("InHouseAgent-UITest-" + UUID().uuidString, isDirectory: true)
         try FileManager.default.createDirectory(at: workspace, withIntermediateDirectories: true)
@@ -137,6 +137,11 @@ final class RuntimeUITests: XCTestCase {
         waitForSend(app)
         let answerTexts = app.descendants(matching: .any).matching(identifier: "chat.assistant").allElementsBoundByIndex.map { ($0.value as? String).flatMap { $0.isEmpty ? nil : $0 } ?? $0.label }
         XCTAssertTrue(answerTexts.contains { $0.contains("alpha.txt") && $0.contains("beta.md") }, "Synthetic workspace reply: \(answerTexts)")
+        let streamEvidence = XCTAttachment(string: "Distinct visible response states before completion: \(visibleResponseStates.count)")
+        streamEvidence.name = "streaming-observation"
+        streamEvidence.lifetime = .keepAlways
+        add(streamEvidence)
+        XCTAssertGreaterThanOrEqual(visibleResponseStates.count, 2, "At least two changing response states must be visible while generation is active")
         let savedRow = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH %@ AND label BEGINSWITH %@", "history.item.", "Use list_directory")).firstMatch
         XCTAssertTrue(savedRow.waitForExistence(timeout: 5))
         let savedID = String(savedRow.identifier.dropFirst("history.item.".count))
@@ -144,6 +149,7 @@ final class RuntimeUITests: XCTestCase {
         let savedData = try Data(contentsOf: applicationSupportURL.appendingPathComponent("Conversations").appendingPathComponent(savedID + ".json"))
         let saved = try XCTUnwrap(JSONSerialization.jsonObject(with: savedData) as? [String: Any])
         XCTAssertTrue((saved["title"] as? String ?? "").hasPrefix("Use list_directory"))
+        XCTAssertEqual(saved["workspace"] as? String, workspace.path)
         let savedMessages = try XCTUnwrap(saved["messages"] as? [[String: Any]])
         let activities = savedMessages.flatMap { $0["tools"] as? [[String: Any]] ?? [] }.filter { $0["name"] as? String == "list_directory" }
         XCTAssertEqual(activities.count, 1, "One real directory call must render one correlated activity")
@@ -152,11 +158,6 @@ final class RuntimeUITests: XCTestCase {
         XCTAssertTrue((activities.first?["result"] as? String ?? "").contains("alpha.txt"))
         let correlated = XCTAttachment(string: "Real list_directory activity: one completed row with arguments and result preserved")
         correlated.name = "real-tool-correlation"; correlated.lifetime = .keepAlways; add(correlated)
-        let streamEvidence = XCTAttachment(string: "Distinct visible response states before completion: \(visibleResponseStates.count)")
-        streamEvidence.name = "streaming-observation"
-        streamEvidence.lifetime = .keepAlways
-        add(streamEvidence)
-        XCTAssertGreaterThanOrEqual(visibleResponseStates.count, 2, "At least two changing response states must be visible while generation is active")
         let output = workspace.appendingPathComponent("approved.txt")
         try replace(input, with: "Use create_file to create approved.txt in the workspace with exactly the text APPROVED. Do not use a shell command.", app: app)
         try requireForeground(app)
@@ -214,7 +215,7 @@ final class SetupUITests: XCTestCase {
     func testInstallEnvironmentWithWizard() throws {
         continueAfterFailure = false
         let app = XCUIApplication()
-        app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US", "-autoStartServer", "NO"]
+        app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US", "-autoStartServer", "NO", "-allowCloud", "NO"]
         app.launch()
         app.activate()
         XCTAssertTrue(app.wait(for: .runningForeground, timeout: 10))
@@ -247,7 +248,7 @@ final class LifecycleUITests: XCTestCase {
     func testNormalQuitReapsOwnedProcesses() throws {
         continueAfterFailure = false
         let app = XCUIApplication()
-        app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US", "-autoStartServer", "NO"]
+        app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US", "-autoStartServer", "NO", "-allowCloud", "NO"]
         app.launch(); app.activate()
         XCTAssertTrue(app.wait(for: .runningForeground, timeout: 10))
         addTeardownBlock { @MainActor in app.terminate() }
@@ -269,7 +270,7 @@ final class LifecycleUITests: XCTestCase {
     func testRestartCrashRecoveryAndQuit() throws {
         continueAfterFailure = false
         let app = XCUIApplication()
-        app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US", "-autoStartServer", "NO"]
+        app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US", "-autoStartServer", "NO", "-allowCloud", "NO"]
         app.launch()
         app.activate()
         XCTAssertTrue(app.wait(for: .runningForeground, timeout: 10))
@@ -405,7 +406,7 @@ final class UpdateUITests: XCTestCase {
         }
         XCTAssertEqual(installedVersion(), "0.1.0", "Install the actual signed baseline before running this suite")
         let app = XCUIApplication(url: installedURL)
-        app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US", "-autoStartServer", "NO", "-autoCheckUpdates", "NO"]
+        app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US", "-autoStartServer", "NO", "-allowCloud", "NO", "-autoCheckUpdates", "NO"]
         app.launch()
         app.activate()
         XCTAssertTrue(app.wait(for: .runningForeground, timeout: 15))
@@ -472,7 +473,7 @@ final class NotificationUITests: XCTestCase {
         continueAfterFailure = false
         let url = URL(fileURLWithPath: "/Applications/In-House Agent.app")
         let app = XCUIApplication(url: url)
-        app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US", "-autoStartServer", "NO", "-autoCheckUpdates", "NO"]
+        app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US", "-autoStartServer", "NO", "-allowCloud", "NO", "-autoCheckUpdates", "NO"]
         app.launch(); app.activate()
         XCTAssertTrue(app.wait(for: .runningForeground, timeout: 15))
         try requireForeground(app)
@@ -509,10 +510,14 @@ final class ModernUITests: XCTestCase {
         guard !files.isEmpty else { throw XCTSkip("No existing synthetic diagnostic conversation") }
         let latest = try XCTUnwrap(files.max { (try? $0.resourceValues(forKeys: [.contentModificationDateKey]).contentModificationDate ?? .distantPast) ?? .distantPast < (try? $1.resourceValues(forKeys: [.contentModificationDateKey]).contentModificationDate ?? .distantPast) ?? .distantPast })
         let record = try XCTUnwrap(JSONSerialization.jsonObject(with: Data(contentsOf: latest)) as? [String: Any])
-        guard (record["title"] as? String ?? "").hasPrefix("UI-") else { throw XCTSkip("The latest conversation is not the synthetic UI fixture") }
+        let diagnosticTitle = record["title"] as? String ?? ""
+        let diagnosticWorkspace = record["workspace"] as? String ?? ""
+        guard diagnosticTitle.hasPrefix("UI-"), diagnosticTitle.contains("Use list_directory"),
+              URL(fileURLWithPath: diagnosticWorkspace).lastPathComponent.hasPrefix("InHouseAgent-UITest-")
+        else { throw XCTSkip("The latest conversation is not the synthetic UI fixture") }
         let id = try XCTUnwrap(record["id"] as? String)
         let app = XCUIApplication()
-        app.launchArguments = ["-AppleLanguages", "(ja)", "-AppleLocale", "ja_JP", "-autoStartServer", "NO"]
+        app.launchArguments = ["-AppleLanguages", "(ja)", "-AppleLocale", "ja_JP", "-autoStartServer", "NO", "-allowCloud", "NO"]
         app.launch(); app.activate()
         XCTAssertTrue(app.wait(for: .runningForeground, timeout: 15))
         addTeardownBlock { @MainActor in app.terminate() }
@@ -577,7 +582,7 @@ final class ModernUITests: XCTestCase {
     func testJapaneseToolsAndPersistentConversation() throws {
         continueAfterFailure = false
         let app = XCUIApplication()
-        app.launchArguments = ["-AppleLanguages", "(ja)", "-AppleLocale", "ja_JP", "-autoStartServer", "NO"]
+        app.launchArguments = ["-AppleLanguages", "(ja)", "-AppleLocale", "ja_JP", "-autoStartServer", "NO", "-allowCloud", "NO"]
         let fixture = FileManager.default.temporaryDirectory.appendingPathComponent("InHouseAgent-UITest-" + UUID().uuidString)
         try FileManager.default.createDirectory(at: fixture, withIntermediateDirectories: true)
         try "synthetic fixture".write(to: fixture.appendingPathComponent("modern-ui.txt"), atomically: true, encoding: .utf8)
@@ -691,9 +696,9 @@ final class SystemNotificationUITests: XCTestCase {
         XCTAssertTrue(control.waitForExistence(timeout: 10), "The selected app must expose its Allow notifications control")
         let evidence = controls.allElementsBoundByIndex.map { "type=\($0.elementType.rawValue) label=\($0.label) value=\($0.value ?? "nil")" }.joined(separator: "\n")
         let item = XCTAttachment(string: evidence); item.name = "inhouse-notification-controls"; item.lifetime = .keepAlways; add(item)
-        if control.value as? String == "0" {
+        if String(describing: control.value ?? "") == "0" {
             try guardSettings(); control.click()
         }
-        XCTAssertEqual(control.value as? String, "1", "Only the selected app's notification permission should be enabled")
+        XCTAssertEqual(String(describing: control.value ?? ""), "1", "Only the selected app's notification permission should be enabled")
     }
 }

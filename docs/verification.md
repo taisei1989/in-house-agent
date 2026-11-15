@@ -74,3 +74,11 @@ Keychainの使用を利用者が許可した後、最新修正でv0.1.0 zipと�
 ModernInspectUI-8は保存済みの合成会話を使用し、`TEST SUCCEEDED`。本文のアクセシビリティラベル、思考未提供の説明を展開、ツールの外側・個別詳細の展開と結果本文、新規チャット、履歴検索、閲覧専用状態、通常終了後の再起動・本文復元・停止中の起動導線を確認しました。モデルの新規推論は先行ModernUIで成功した結果を再利用しています。LiteRT接続が思考を返さない制約を、思考本文の表示成功と取り違えません。
 
 最新版のPython統合回帰: `PYTHONDONTWRITEBYTECODE=1 .venv/bin/python -m pytest sidecar/test_server.py sidecar/test_cloud.py sidecar/test_event_preview.py -q` → `28 passed in 1.87s`。sandbox内の初回はlocalhost待ち受け制限によって2件失敗したため、ループバック通信を許可して再実行しました。外部の実クラウドAPIは呼んでいません。
+
+## ツールイベント相関の実SDK確認
+
+実SDKではToolCallのstepと完了hookのstepが一致せず、完了stepが後続のToolCallのstepと重なる場合もありました。同じtrajectory内でname/serverが一致する一意の未完実行だけを関連付け、ずれた完了stepは後続呼び出しのaliasとして登録しません。
+
+修正後の実モデル検証では`list_directory → view_file`が独立した2件のcompletedになり、両方の引数と結果を保持し、既知ファイルへの回答が一致しました。終了コード0。関連Python回帰は`33 passed in 1.83s`です。
+
+最終英Runtimeの再実行は、通知設定の手動操作を依頼している間にGUIを停止するため、送信前に中断しました。機能の失敗ではありませんが、最終一括テスト成功とも扱いません。残ったテスト専用workspace設定は、該当fixtureのときだけ専用の既定Workspaceへ復元済みです。
