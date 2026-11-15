@@ -1,0 +1,62 @@
+// !$*UTF8*$!
+{
+ archiveVersion = 1; classes = {}; objectVersion = 56;
+ objects = {
+ A001 = {isa = PBXProject; attributes = {LastUpgradeCheck = 2660;}; buildConfigurationList = A002; compatibilityVersion = "Xcode 14.0"; developmentRegion = en; hasScannedForEncodings = 0; knownRegions = (en, ja, Base); mainGroup = A003; productRefGroup = A004; projectDirPath = ""; projectRoot = ""; targets = (A005,E001); packageReferences = (D001);};
+ A002 = {isa = XCConfigurationList; buildConfigurations = (A010,A011); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release;};
+ A003 = {isa = PBXGroup; children = (E011,A006,A007,A004,B000A,B001A,B002A,B004A,B005A,B006A,B007A,C000A,C001A,C002A); sourceTree = "<group>";};
+ A004 = {isa = PBXGroup; children = (A008,E010); name = Products; sourceTree = "<group>";};
+ A005 = {isa = PBXNativeTarget; buildConfigurationList = A009; buildPhases = (A012,A013,A014); buildRules = (); dependencies = (); name = InHouseAgent; productName = InHouseAgent; productReference = A008; productType = "com.apple.product-type.application"; packageProductDependencies = (D002);};
+ A006 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App/InHouseAgentApp.swift; sourceTree = "<group>";};
+ A007 = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = App/Localizable.xcstrings; sourceTree = "<group>";};
+ A008 = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "In-House Agent.app"; sourceTree = BUILT_PRODUCTS_DIR;};
+ A009 = {isa = XCConfigurationList; buildConfigurations = (A015,A016); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release;};
+ A010 = {isa = XCBuildConfiguration; buildSettings = {MACOSX_DEPLOYMENT_TARGET = 14.0; SDKROOT = macosx; SWIFT_VERSION = 5.0;}; name = Debug;};
+ A011 = {isa = XCBuildConfiguration; buildSettings = {MACOSX_DEPLOYMENT_TARGET = 14.0; SDKROOT = macosx; SWIFT_VERSION = 5.0;}; name = Release;};
+ A012 = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (A017,B000B,B001B,B002B,B004B,B005B,B006B,B007B); runOnlyForDeploymentPostprocessing = 0;};
+ A013 = {isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (D003); runOnlyForDeploymentPostprocessing = 0;};
+ A014 = {isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = (A018,C000B,C001B,C002B); runOnlyForDeploymentPostprocessing = 0;};
+ A015 = {isa = XCBuildConfiguration; buildSettings = {CODE_SIGN_IDENTITY = "-"; CODE_SIGN_STYLE = Manual; GENERATE_INFOPLIST_FILE = YES; INFOPLIST_KEY_CFBundleIconFile = AppIcon; EXECUTABLE_NAME = InHouseAgent; PRODUCT_MODULE_NAME = InHouseAgent; ALWAYS_SEARCH_USER_PATHS = NO; LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks"; INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity"; PRODUCT_BUNDLE_IDENTIFIER = "com.taisei1989.inhouseagent"; PRODUCT_NAME = "In-House Agent"; CURRENT_PROJECT_VERSION = 1; MARKETING_VERSION = 0.1.0; SWIFT_EMIT_LOC_STRINGS = YES; ENABLE_APP_SANDBOX = NO;}; name = Debug;};
+ A016 = {isa = XCBuildConfiguration; buildSettings = {CODE_SIGN_IDENTITY = "-"; CODE_SIGN_STYLE = Manual; GENERATE_INFOPLIST_FILE = YES; INFOPLIST_KEY_CFBundleIconFile = AppIcon; EXECUTABLE_NAME = InHouseAgent; PRODUCT_MODULE_NAME = InHouseAgent; ALWAYS_SEARCH_USER_PATHS = NO; LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks"; INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity"; PRODUCT_BUNDLE_IDENTIFIER = "com.taisei1989.inhouseagent"; PRODUCT_NAME = "In-House Agent"; CURRENT_PROJECT_VERSION = 1; MARKETING_VERSION = 0.1.0; SWIFT_EMIT_LOC_STRINGS = YES; ENABLE_APP_SANDBOX = NO;}; name = Release;};
+ A017 = {isa = PBXBuildFile; fileRef = A006;};
+ A018 = {isa = PBXBuildFile; fileRef = A007;};
+
+B000A = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "App/ChatViews.swift"; sourceTree = "<group>";};
+B000B = {isa = PBXBuildFile; fileRef = B000A;};
+B001A = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "App/CloudSettings.swift"; sourceTree = "<group>";};
+B001B = {isa = PBXBuildFile; fileRef = B001A;};
+B002A = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "App/ConversationStore.swift"; sourceTree = "<group>";};
+B002B = {isa = PBXBuildFile; fileRef = B002A;};
+B004A = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "App/Routines.swift"; sourceTree = "<group>";};
+B004B = {isa = PBXBuildFile; fileRef = B004A;};
+B005A = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "App/ServerModel.swift"; sourceTree = "<group>";};
+B005B = {isa = PBXBuildFile; fileRef = B005A;};
+B006A = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "App/SetupModel.swift"; sourceTree = "<group>";};
+B006B = {isa = PBXBuildFile; fileRef = B006A;};
+B007A = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "App/Updater.swift"; sourceTree = "<group>";};
+B007B = {isa = PBXBuildFile; fileRef = B007A;};
+C000A = {isa = PBXFileReference; lastKnownFileType = folder; path = "sidecar"; sourceTree = "<group>";};
+C000B = {isa = PBXBuildFile; fileRef = C000A;};
+C001A = {isa = PBXFileReference; lastKnownFileType = text; path = "requirements.lock"; sourceTree = "<group>";};
+C001B = {isa = PBXBuildFile; fileRef = C001A;};
+C002A = {isa = PBXFileReference; lastKnownFileType = image.icns; path = "App/AppIcon.icns"; sourceTree = "<group>";};
+C002B = {isa = PBXBuildFile; fileRef = C002A;};
+D001 = {isa = XCRemoteSwiftPackageReference; repositoryURL = "https://github.com/sparkle-project/Sparkle"; requirement = {kind = exactVersion; version = 2.10.1;};};
+D002 = {isa = XCSwiftPackageProductDependency; package = D001; productName = Sparkle;};
+D003 = {isa = PBXBuildFile; productRef = D002;};
+
+E001 = {isa = PBXNativeTarget; buildConfigurationList = E002; buildPhases = (E005,E006,E007); buildRules = (); dependencies = (E008); name = InHouseAgentUITests; productName = InHouseAgentUITests; productReference = E010; productType = "com.apple.product-type.bundle.ui-testing";};
+E002 = {isa = XCConfigurationList; buildConfigurations = (E003,E004); defaultConfigurationIsVisible = 0; defaultConfigurationName = Debug;};
+E003 = {isa = XCBuildConfiguration; buildSettings = {CODE_SIGN_IDENTITY = "-"; CODE_SIGN_STYLE = Manual; GENERATE_INFOPLIST_FILE = YES; PRODUCT_BUNDLE_IDENTIFIER = "com.taisei1989.inhouseagent.uitests"; PRODUCT_NAME = "$(TARGET_NAME)"; TEST_TARGET_NAME = InHouseAgent; SWIFT_VERSION = 5.0; MACOSX_DEPLOYMENT_TARGET = 14.0; ENABLE_APP_SANDBOX = NO; LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";}; name = Debug;};
+E004 = {isa = XCBuildConfiguration; buildSettings = {CODE_SIGN_IDENTITY = "-"; CODE_SIGN_STYLE = Manual; GENERATE_INFOPLIST_FILE = YES; PRODUCT_BUNDLE_IDENTIFIER = "com.taisei1989.inhouseagent.uitests"; PRODUCT_NAME = "$(TARGET_NAME)"; TEST_TARGET_NAME = InHouseAgent; SWIFT_VERSION = 5.0; MACOSX_DEPLOYMENT_TARGET = 14.0; ENABLE_APP_SANDBOX = NO; LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";}; name = Release;};
+E005 = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (E012); runOnlyForDeploymentPostprocessing = 0;};
+E006 = {isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0;};
+E007 = {isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0;};
+E008 = {isa = PBXTargetDependency; target = A005; targetProxy = E009;};
+E009 = {isa = PBXContainerItemProxy; containerPortal = A001; proxyType = 1; remoteGlobalIDString = A005; remoteInfo = InHouseAgent;};
+E010 = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = InHouseAgentUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR;};
+E011 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITests/InHouseAgentUITests.swift; sourceTree = "<group>";};
+E012 = {isa = PBXBuildFile; fileRef = E011;};
+
+ }; rootObject = A001;
+}

@@ -1,0 +1,2136 @@
+{
+  "sourceLanguage": "en",
+  "strings": {
+    "Add Routine": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ルーティンを追加"
+          }
+        }
+      }
+    },
+    "Allow cloud models": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "クラウドモデルの併用を許可"
+          }
+        }
+      }
+    },
+    "Approve": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "許可"
+          }
+        }
+      }
+    },
+    "Approve this operation?": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "この操作を許可しますか？"
+          }
+        }
+      }
+    },
+    "Assistant": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "アシスタント"
+          }
+        }
+      }
+    },
+    "Automatically check for updates": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "アップデートを自動確認"
+          }
+        }
+      }
+    },
+    "Cancel": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "キャンセル"
+          }
+        }
+      }
+    },
+    "Cancel Setup": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "セットアップをキャンセル"
+          }
+        }
+      }
+    },
+    "Cancelling setup": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "セットアップをキャンセル中"
+          }
+        }
+      }
+    },
+    "Chat": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "チャット"
+          }
+        }
+      }
+    },
+    "Check for Updates…": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "アップデートを確認…"
+          }
+        }
+      }
+    },
+    "Checking Python": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pythonを確認中"
+          }
+        }
+      }
+    },
+    "Choose a model in Settings before registering a routine.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ルーティンを登録する前に、設定でモデルを選択してください。"
+          }
+        }
+      }
+    },
+    "Choose an existing workspace folder.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "存在する作業ディレクトリを選択してください。"
+          }
+        }
+      }
+    },
+    "Choose…": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "選択…"
+          }
+        }
+      }
+    },
+    "Cloud providers are not configured. All inference runs locally.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "クラウドは未設定です。すべての推論をこのMacで実行します。"
+          }
+        }
+      }
+    },
+    "Complete setup before registering a routine.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ルーティンを登録する前に、セットアップを完了してください。"
+          }
+        }
+      }
+    },
+    "Complete setup before starting the server.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "セットアップを完了してからサーバーを起動してください。"
+          }
+        }
+      }
+    },
+    "Create a Python environment and download Gemma to this Mac. The model requires a large download and is stored separately from the application.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Python環境を作成し、このMacにGemmaをダウンロードします。モデルのダウンロードには大容量の通信が必要です。モデルはアプリとは別に保存されます。"
+          }
+        }
+      }
+    },
+    "Creating Python environment": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Python環境を作成中"
+          }
+        }
+      }
+    },
+    "Daily at %@ · %@": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "毎日 %@ · %@"
+          }
+        }
+      }
+    },
+    "Delete": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "削除"
+          }
+        }
+      }
+    },
+    "Delete this routine?": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "このルーティンを削除しますか？"
+          }
+        }
+      }
+    },
+    "Deny": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "拒否"
+          }
+        }
+      }
+    },
+    "Dependencies": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "依存パッケージ"
+          }
+        }
+      }
+    },
+    "Done": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "完了"
+          }
+        }
+      }
+    },
+    "Downloading Gemma model": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gemmaモデルをダウンロード中"
+          }
+        }
+      }
+    },
+    "Edit": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "編集"
+          }
+        }
+      }
+    },
+    "Enable Routine Notifications": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ルーティンの通知を有効にする"
+          }
+        }
+      }
+    },
+    "Enter a name, prompt, and valid time.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "名前、プロンプト、有効な時刻を入力してください。"
+          }
+        }
+      }
+    },
+    "Environment": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "環境"
+          }
+        }
+      }
+    },
+    "Error": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "エラー"
+          }
+        }
+      }
+    },
+    "In-House Agent": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "In-House Agent"
+          }
+        }
+      }
+    },
+    "Installation required": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "インストールが必要"
+          }
+        }
+      }
+    },
+    "Installing dependencies": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "依存パッケージをインストール中"
+          }
+        }
+      }
+    },
+    "Last result: %@": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "前回の結果：%@"
+          }
+        }
+      }
+    },
+    "Loading model": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "モデル読み込み中"
+          }
+        }
+      }
+    },
+    "Logs": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ログ"
+          }
+        }
+      }
+    },
+    "Memory": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "メモリ使用量"
+          }
+        }
+      }
+    },
+    "Message": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "メッセージ"
+          }
+        }
+      }
+    },
+    "Model": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "モデル"
+          }
+        }
+      }
+    },
+    "Model path": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "モデルのパス"
+          }
+        }
+      }
+    },
+    "Name": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "名前"
+          }
+        }
+      }
+    },
+    "New Chat": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "新規チャット"
+          }
+        }
+      }
+    },
+    "No routines": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ルーティンがありません"
+          }
+        }
+      }
+    },
+    "Not configured": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "未設定"
+          }
+        }
+      }
+    },
+    "Not registered": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "未登録"
+          }
+        }
+      }
+    },
+    "Notifications": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "通知"
+          }
+        }
+      }
+    },
+    "OK": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OK"
+          }
+        }
+      }
+    },
+    "Only this operation will be allowed. Review the file path or command before approving.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "今回の操作だけを許可します。許可する前に、ファイルのパスやコマンドを確認してください。"
+          }
+        }
+      }
+    },
+    "Prompt": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "プロンプト"
+          }
+        }
+      }
+    },
+    "Python executable": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Python実行ファイル"
+          }
+        }
+      }
+    },
+    "Python is unavailable. Choose an installed Python 3 executable.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pythonが見つかりません。インストール済みのPython 3実行ファイルを選択してください。"
+          }
+        }
+      }
+    },
+    "Quit In-House Agent": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "In-House Agentを終了"
+          }
+        }
+      }
+    },
+    "Ready": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "準備完了"
+          }
+        }
+      }
+    },
+    "Ready to set up": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "セットアップを開始できます"
+          }
+        }
+      }
+    },
+    "Register": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "登録"
+          }
+        }
+      }
+    },
+    "Registered": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "登録済み"
+          }
+        }
+      }
+    },
+    "Restart Server": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "サーバーを再起動"
+          }
+        }
+      }
+    },
+    "Restart the server to apply model and workspace changes.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "モデルと作業ディレクトリの変更は、サーバーを再起動すると反映されます。"
+          }
+        }
+      }
+    },
+    "Retry": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "再試行"
+          }
+        }
+      }
+    },
+    "Routine": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ルーティン"
+          }
+        }
+      }
+    },
+    "Routine could not be updated": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ルーティンを更新できませんでした"
+          }
+        }
+      }
+    },
+    "Routines": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ルーティン"
+          }
+        }
+      }
+    },
+    "Run Now": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "今すぐ実行"
+          }
+        }
+      }
+    },
+    "Run daily at": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "毎日の実行時刻"
+          }
+        }
+      }
+    },
+    "Save": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "保存"
+          }
+        }
+      }
+    },
+    "Schedule tasks to run on this Mac.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "このMacで定期実行するタスクを設定します。"
+          }
+        }
+      }
+    },
+    "Scheduled tasks cannot approve file changes or commands. Review their results here.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "定期実行では、ファイルの変更やコマンド実行を自動で許可しません。実行結果をここで確認してください。"
+          }
+        }
+      }
+    },
+    "Send": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "送信"
+          }
+        }
+      }
+    },
+    "Server": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "サーバー"
+          }
+        }
+      }
+    },
+    "Server Status": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "サーバーの状態"
+          }
+        }
+      }
+    },
+    "Server controls": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "サーバーの操作"
+          }
+        }
+      }
+    },
+    "Server failed repeatedly. Automatic restart paused.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "サーバーが繰り返し異常終了したため、自動再起動を停止しました。"
+          }
+        }
+      }
+    },
+    "Server logs will appear here.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "サーバーのログがここに表示されます。"
+          }
+        }
+      }
+    },
+    "Server: Stopped": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "サーバー：停止中"
+          }
+        }
+      }
+    },
+    "Set Up Later": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "後で設定"
+          }
+        }
+      }
+    },
+    "Set Up Model…": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "モデルをセットアップ…"
+          }
+        }
+      }
+    },
+    "Set up In-House Agent": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "In-House Agentのセットアップ"
+          }
+        }
+      }
+    },
+    "Set up a model to start a conversation.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "モデルをセットアップして会話を始めましょう。"
+          }
+        }
+      }
+    },
+    "Settings": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "設定"
+          }
+        }
+      }
+    },
+    "Setup cancelled": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "セットアップをキャンセルしました"
+          }
+        }
+      }
+    },
+    "Setup command failed with exit code %d. Check the log for Python compatibility, network, or model access errors.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "セットアップのコマンドが終了コード%dで失敗しました。Pythonの互換性、ネットワーク、モデルへのアクセスに関するエラーをログで確認してください。"
+          }
+        }
+      }
+    },
+    "Setup complete": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "セットアップ完了"
+          }
+        }
+      }
+    },
+    "Setup failed": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "セットアップに失敗しました"
+          }
+        }
+      }
+    },
+    "Setup log": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "セットアップログ"
+          }
+        }
+      }
+    },
+    "Setup output will appear here.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "セットアップの実行ログがここに表示されます。"
+          }
+        }
+      }
+    },
+    "Show Log Files": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ログファイルを表示"
+          }
+        }
+      }
+    },
+    "Start Server": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "サーバーを起動"
+          }
+        }
+      }
+    },
+    "Start Setup": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "セットアップを開始"
+          }
+        }
+      }
+    },
+    "Start server when the app opens": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "アプリ起動時にサーバーを自動起動"
+          }
+        }
+      }
+    },
+    "Start the server, then ask about files in your workspace.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "サーバーを起動して、作業ディレクトリ内のファイルについて質問してください。"
+          }
+        }
+      }
+    },
+    "Starting": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "起動中"
+          }
+        }
+      }
+    },
+    "Status": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "状態"
+          }
+        }
+      }
+    },
+    "Stop Server": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "サーバーを停止"
+          }
+        }
+      }
+    },
+    "Stopped": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "停止中"
+          }
+        }
+      }
+    },
+    "The application is missing requirements.lock. Reinstall the application.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "アプリにrequirements.lockがありません。アプリを再インストールしてください。"
+          }
+        }
+      }
+    },
+    "The model import finished without creating the expected model file. Check the setup log.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "モデルの取り込み後、指定のモデルファイルが見つかりませんでした。セットアップログを確認してください。"
+          }
+        }
+      }
+    },
+    "Thinking…": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "考えています…"
+          }
+        }
+      }
+    },
+    "Tool": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ツール"
+          }
+        }
+      }
+    },
+    "Tool activity": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ツールの実行状況"
+          }
+        }
+      }
+    },
+    "Unable to generate session token": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "セッショントークンを生成できませんでした。"
+          }
+        }
+      }
+    },
+    "Unregister": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "登録を解除"
+          }
+        }
+      }
+    },
+    "Unregister the routine before editing or deleting it.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "編集または削除する前に、ルーティンの登録を解除してください。"
+          }
+        }
+      }
+    },
+    "Up to date": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "最新"
+          }
+        }
+      }
+    },
+    "Updates": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "アップデート"
+          }
+        }
+      }
+    },
+    "Updates are not configured. Set the release feed and public signing key.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "アップデートは未設定です。配信フィードと署名の公開鍵を設定してください。"
+          }
+        }
+      }
+    },
+    "Using existing model": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "既存のモデルを使用"
+          }
+        }
+      }
+    },
+    "Workspace": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "作業ディレクトリ"
+          }
+        }
+      }
+    },
+    "You": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "あなた"
+          }
+        }
+      }
+    },
+    "Your local assistant": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ローカルAIアシスタント"
+          }
+        }
+      }
+    },
+    "completed": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "完了"
+          }
+        }
+      }
+    },
+    "error": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "エラー"
+          }
+        }
+      }
+    },
+    "failed": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "失敗"
+          }
+        }
+      }
+    },
+    "needs_approval": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "承認が必要"
+          }
+        }
+      }
+    },
+    "running": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "実行中"
+          }
+        }
+      }
+    },
+    "success": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "成功"
+          }
+        }
+      }
+    },
+    "Server did not stop. Try again before quitting.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "サーバーが停止しませんでした。終了する前にもう一度お試しください。"
+          }
+        }
+      }
+    },
+    "Google": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Google"
+          }
+        }
+      }
+    },
+    "OpenAI-compatible": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OpenAI互換"
+          }
+        }
+      }
+    },
+    "Choose a supported cloud provider in Settings.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "設定で対応するクラウドプロバイダーを選択してください。"
+          }
+        }
+      }
+    },
+    "Enter the cloud model name in Settings before starting the server.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "サーバーを起動する前に、設定でクラウドモデル名を入力してください。"
+          }
+        }
+      }
+    },
+    "Use an HTTPS base URL without credentials, query parameters, or a fragment.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "認証情報・クエリパラメーター・フラグメントを含まないHTTPSのベースURLを指定してください。"
+          }
+        }
+      }
+    },
+    "Enter a nonempty API key without control characters.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "制御文字を含まないAPIキーを入力してください。"
+          }
+        }
+      }
+    },
+    "Save an API key for the selected provider in Settings.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "設定で選択したプロバイダーのAPIキーを保存してください。"
+          }
+        }
+      }
+    },
+    "Keychain access failed (code %d). Check Keychain access and try again.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "キーチェーンへのアクセスに失敗しました（コード%d）。アクセス権を確認して再試行してください。"
+          }
+        }
+      }
+    },
+    "Cloud Models": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "クラウドモデル"
+          }
+        }
+      }
+    },
+    "Use a cloud model": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "クラウドモデルを使用"
+          }
+        }
+      }
+    },
+    "When the server restarts, prompts and tool results will be sent to the selected provider. Local inference resumes when this option is off.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "サーバーを再起動すると、プロンプトとツールの実行結果を選択したプロバイダーに送信します。OFFにして再起動するとローカル推論に戻ります。"
+          }
+        }
+      }
+    },
+    "After restarting the server, prompts and tool results use only the local model.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "サーバーを再起動すると、プロンプトとツールの実行結果はローカルモデルだけで処理します。"
+          }
+        }
+      }
+    },
+    "Provider": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "プロバイダー"
+          }
+        }
+      }
+    },
+    "Cloud model name": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "クラウドモデル名"
+          }
+        }
+      }
+    },
+    "HTTPS base URL": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "HTTPSベースURL"
+          }
+        }
+      }
+    },
+    "Use the API base URL supplied by your provider, including its API version path.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "プロバイダーが指定するAPIのベースURLを、APIバージョンのパスも含めて入力してください。"
+          }
+        }
+      }
+    },
+    "API key": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "APIキー"
+          }
+        }
+      }
+    },
+    "Saved in Keychain": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "キーチェーンに保存済み"
+          }
+        }
+      }
+    },
+    "Not saved": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "未保存"
+          }
+        }
+      }
+    },
+    "New API key": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "新しいAPIキー"
+          }
+        }
+      }
+    },
+    "Save API Key": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "APIキーを保存"
+          }
+        }
+      }
+    },
+    "Delete Saved Key": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "保存したキーを削除"
+          }
+        }
+      }
+    },
+    "The saved key is never displayed. Restart the server to apply cloud settings.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "保存済みのキーは表示しません。クラウド設定を適用するにはサーバーを再起動してください。"
+          }
+        }
+      }
+    },
+    "Delete this provider's API key?": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "このプロバイダーのAPIキーを削除しますか？"
+          }
+        }
+      }
+    },
+    "You will need to enter the key again to use this provider.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "このプロバイダーを利用するには、APIキーを再入力する必要があります。"
+          }
+        }
+      }
+    },
+    "Google cloud": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Googleクラウド"
+          }
+        }
+      }
+    },
+    "OpenAI-compatible cloud": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OpenAI互換クラウド"
+          }
+        }
+      }
+    },
+    "Local model": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ローカルモデル"
+          }
+        }
+      }
+    },
+    "Routine finished. Open In-House Agent to view the result.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ルーティンが終了しました。In-House Agentで結果を確認できます。"
+          }
+        }
+      }
+    },
+    "Conversations": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "会話"
+          }
+        }
+      }
+    },
+    "Search conversations": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "会話を検索"
+          }
+        }
+      }
+    },
+    "Rename": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "名前を変更"
+          }
+        }
+      }
+    },
+    "Delete Conversation": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "会話を削除"
+          }
+        }
+      }
+    },
+    "No saved conversations": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "保存された会話はありません"
+          }
+        }
+      }
+    },
+    "Rename Conversation": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "会話の名前を変更"
+          }
+        }
+      }
+    },
+    "Title": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "タイトル"
+          }
+        }
+      }
+    },
+    "Delete this conversation?": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "この会話を削除しますか？"
+          }
+        }
+      }
+    },
+    "The saved conversation will be deleted from this Mac. File changes and commands already performed are not undone.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "保存された会話をこのMacから削除します。実行済みのファイル変更やコマンドは元に戻りません。"
+          }
+        }
+      }
+    },
+    "Conversation History": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "会話履歴"
+          }
+        }
+      }
+    },
+    "Conversations, model thinking, and tool previews are saved on this Mac. Delete conversations from the sidebar to remove their saved history.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "会話、モデルの思考、ツールの実行内容はこのMacに保存されます。保存された履歴はサイドバーから会話を削除すると消去できます。"
+          }
+        }
+      }
+    },
+    "What would you like to work on?": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "何をお手伝いしましょうか？"
+          }
+        }
+      }
+    },
+    "Ask about files, make a change, or plan your next task.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ファイルの確認や変更、次の作業の計画を依頼できます。"
+          }
+        }
+      }
+    },
+    "List files in this workspace": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "作業フォルダのファイルを一覧にする"
+          }
+        }
+      }
+    },
+    "List the files in my workspace.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "作業フォルダ内のファイルを一覧にしてください。"
+          }
+        }
+      }
+    },
+    "Continue with saved history?": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "保存した履歴を使って続けますか？"
+          }
+        }
+      }
+    },
+    "Continue": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "続ける"
+          }
+        }
+      }
+    },
+    "This starts a new model session with up to the most recent 16,000 characters of this conversation. Previous tool operations are not replayed. History will be sent to the connection shown below.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "この会話の直近最大16,000文字を添えて、新しいモデルセッションを開始します。過去のツール操作は再実行しません。履歴は下記の接続先に送信されます。"
+          }
+        }
+      }
+    },
+    "Send the request again?": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "同じ依頼をもう一度送信しますか？"
+          }
+        }
+      }
+    },
+    "Send Again": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "もう一度送信"
+          }
+        }
+      }
+    },
+    "This starts a new execution. Previously completed file changes or commands could run again; review any approval request carefully.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "新しい実行を開始します。完了済みのファイル変更やコマンドが再度行われる場合があるため、承認する操作を確認してください。"
+          }
+        }
+      }
+    },
+    "Saved conversation": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "保存した会話"
+          }
+        }
+      }
+    },
+    "Follow response": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "応答に合わせてスクロール"
+          }
+        }
+      }
+    },
+    "Turn off to read earlier messages while a response is arriving.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "応答中に前のメッセージを読む場合はオフにしてください。"
+          }
+        }
+      }
+    },
+    "Latest": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "最新へ"
+          }
+        }
+      }
+    },
+    "Viewing saved history": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "保存した履歴を表示中"
+          }
+        }
+      }
+    },
+    "Continue in a new model session to send another message.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "次のメッセージは、新しいモデルセッションで会話を続けて送信できます。"
+          }
+        }
+      }
+    },
+    "Continue Conversation": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "会話を続ける"
+          }
+        }
+      }
+    },
+    "Stop this response": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "応答を停止"
+          }
+        }
+      }
+    },
+    "Send (⌘Return)": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "送信（⌘Return）"
+          }
+        }
+      }
+    },
+    "File changes and commands require your approval. ⌘Return to send.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ファイル変更やコマンドの実行には承認が必要です。⌘Returnで送信。"
+          }
+        }
+      }
+    },
+    "Text provided by the model through the SDK. It may be incomplete or incorrect.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "SDKを通じてモデルが出力した思考です。不完全な内容や誤りが含まれる場合があります。"
+          }
+        }
+      }
+    },
+    "Some content was omitted from this preview.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "表示する内容を一部省略しています。"
+          }
+        }
+      }
+    },
+    "Model thinking": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "モデルの思考"
+          }
+        }
+      }
+    },
+    "Tool activity (%lld)": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ツールの実行（%lld件）"
+          }
+        }
+      }
+    },
+    "Your message": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "あなたのメッセージ"
+          }
+        }
+      }
+    },
+    "Assistant response": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "アシスタントの応答"
+          }
+        }
+      }
+    },
+    "Copied": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "コピーしました"
+          }
+        }
+      }
+    },
+    "Copy": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "コピー"
+          }
+        }
+      }
+    },
+    "Copy message": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "メッセージをコピー"
+          }
+        }
+      }
+    },
+    "Working": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "処理中"
+          }
+        }
+      }
+    },
+    "Awaiting approval": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "承認待ち"
+          }
+        }
+      }
+    },
+    "Failed": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "失敗"
+          }
+        }
+      }
+    },
+    "Completed": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "完了"
+          }
+        }
+      }
+    },
+    "Arguments": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "引数"
+          }
+        }
+      }
+    },
+    "Result": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "結果"
+          }
+        }
+      }
+    },
+    "Error details": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "エラーの詳細"
+          }
+        }
+      }
+    },
+    "Conversation history could not be loaded.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "会話履歴を読み込めませんでした。"
+          }
+        }
+      }
+    },
+    "Conversation history could not be saved.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "会話履歴を保存できませんでした。"
+          }
+        }
+      }
+    },
+    "Conversation could not be deleted.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "会話を削除できませんでした。"
+          }
+        }
+      }
+    },
+    "Denied": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "拒否済み"
+          }
+        }
+      }
+    },
+    "Copy details": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "詳細をコピー"
+          }
+        }
+      }
+    },
+    "The response ended before completion. You can send the request again.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "応答が完了前に途切れました。必要に応じてもう一度送信できます。"
+          }
+        }
+      }
+    },
+    "Notification": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "通知"
+          }
+        }
+      }
+    },
+    "Delivered": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "配信済み"
+          }
+        }
+      }
+    },
+    "Delivery failed": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "配信失敗"
+          }
+        }
+      }
+    },
+    "Not available": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "利用できません"
+          }
+        }
+      }
+    },
+    "This approval has expired. Review the task status before trying again.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "この承認は期限切れです。再実行する前にタスクの状態を確認してください。"
+          }
+        }
+      }
+    },
+    "Outcome unknown": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "結果を確認できません"
+          }
+        }
+      }
+    },
+    "Some conversations could not be loaded. Their files have been preserved.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "一部の会話を読み込めませんでした。元のファイルは保存されています。"
+          }
+        }
+      }
+    },
+    "Permission": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "許可"
+          }
+        }
+      }
+    },
+    "Allowed": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "許可されています"
+          }
+        }
+      }
+    },
+    "Not allowed": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "許可されていません"
+          }
+        }
+      }
+    },
+    "Not requested": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "まだ要求していません"
+          }
+        }
+      }
+    },
+    "Unknown": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "不明"
+          }
+        }
+      }
+    },
+    "If permission was denied, enable notifications for In-House Agent in System Settings.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "拒否した場合は、システム設定でIn-House Agentの通知を有効にしてください。"
+          }
+        }
+      }
+    }
+  },
+  "version": "1.0"
+}

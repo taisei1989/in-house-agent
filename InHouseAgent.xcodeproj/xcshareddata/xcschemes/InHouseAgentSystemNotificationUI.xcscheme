@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Scheme LastUpgradeVersion="2660" version="1.3">
+  <BuildAction parallelizeBuildables="YES" buildImplicitDependencies="YES">
+    <BuildActionEntries>
+      <BuildActionEntry buildForTesting="YES" buildForRunning="YES" buildForProfiling="NO" buildForArchiving="NO" buildForAnalyzing="YES">
+        <BuildableReference BuildableIdentifier="primary" BlueprintIdentifier="A005" BuildableName="In-House Agent.app" BlueprintName="InHouseAgent" ReferencedContainer="container:InHouseAgent.xcodeproj"/>
+      </BuildActionEntry>
+      <BuildActionEntry buildForTesting="YES" buildForRunning="NO" buildForProfiling="NO" buildForArchiving="NO" buildForAnalyzing="YES">
+        <BuildableReference BuildableIdentifier="primary" BlueprintIdentifier="E001" BuildableName="InHouseAgentUITests.xctest" BlueprintName="InHouseAgentUITests" ReferencedContainer="container:InHouseAgent.xcodeproj"/>
+      </BuildActionEntry>
+    </BuildActionEntries>
+  </BuildAction>
+  <TestAction buildConfiguration="Debug" selectedDebuggerIdentifier="Xcode.DebuggerFoundation.Debugger.LLDB" selectedLauncherIdentifier="Xcode.IDEFoundation.Launcher.LLDB" shouldUseLaunchSchemeArgsEnv="YES">
+    <Testables>
+      <TestableReference skipped="NO" parallelizable="NO">
+        <BuildableReference BuildableIdentifier="primary" BlueprintIdentifier="E001" BuildableName="InHouseAgentUITests.xctest" BlueprintName="InHouseAgentUITests" ReferencedContainer="container:InHouseAgent.xcodeproj"/>
+        <SkippedTests><Test Identifier="ScaffoldUITests"/><Test Identifier="SetupUITests"/><Test Identifier="RuntimeUITests"/><Test Identifier="LifecycleUITests"/><Test Identifier="NotificationUITests"/><Test Identifier="ModernUITests"/><Test Identifier="UpdateUITests"/></SkippedTests>
+      </TestableReference>
+    </Testables>
+  </TestAction>
+  <LaunchAction buildConfiguration="Debug" selectedDebuggerIdentifier="Xcode.DebuggerFoundation.Debugger.LLDB" selectedLauncherIdentifier="Xcode.IDEFoundation.Launcher.LLDB" launchStyle="0" useCustomWorkingDirectory="NO" ignoresPersistentStateOnLaunch="NO" debugDocumentVersioning="YES">
+    <BuildableProductRunnable runnableDebuggingMode="0"><BuildableReference BuildableIdentifier="primary" BlueprintIdentifier="A005" BuildableName="In-House Agent.app" BlueprintName="InHouseAgent" ReferencedContainer="container:InHouseAgent.xcodeproj"/></BuildableProductRunnable>
+  </LaunchAction>
+</Scheme>

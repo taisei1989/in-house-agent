@@ -1,0 +1,9 @@
+{
+  "app_name": "In-House Agent",
+  "bundle_id": "com.taisei1989.inhouseagent",
+  "version": "0.1.0",
+  "build": 1,
+  "github_repository": "taisei1989/in-house-agent",
+  "feed_url": "https://github.com/taisei1989/in-house-agent/releases/latest/download/appcast.xml",
+  "sparkle_public_key": "Zpup/EXroMNavp0ArPxNpbqBEuTjrta0V2udC4oWbp4="
+}
