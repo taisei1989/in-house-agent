@@ -4,14 +4,14 @@
 
 | フェーズ | 確認済み | 残り |
 | --- | --- | --- |
-| 1 雛形 | Xcode 26.6、arm64、`xcodebuild` Debug `BUILD SUCCEEDED`。初期アプリの日本語チャット・サーバー・SettingsをネイティブUIで確認 | XCTest初回セットアップ・⌘,設定：1 test passed / 0 failed。最終チャットUIは後続 |
+| 1 雛形 | Xcode 26.6、arm64、Debug/Releaseビルド成功。初回セットアップ・⌘,設定・日本語の最終チャットUIを実確認 | なし |
 | 2 サイドカー | google-antigravity 0.1.23、litert-lm 0.19.2インストール、モデル取得完了。実モデル `sidecar.smoke` exit 0、list_directoryで既知のalpha.txt・beta.mdを返答、終了後子プロセス消滅 | なし（アプリ経由の検証は後続） |
 | 3 サーバー管理 | 実UIで開始/停止/手動再起動、強制終了後の自動復帰、3連続失敗停止、手動復帰を確認。通常終了1 test passed、独立監視4プロセス残存0 | なし（全体テストのrunner制約は下記） |
-| 4 連携 | 実モデルのSwiftUI回答でalpha.txt / beta.md一致、生成中の表示更新4段階をXCTestで確認 | なし |
+| 4 連携 | 実モデルのSwiftUI回答でalpha.txt / beta.md一致、最終版で生成中の表示更新3段階をXCTestで確認 | なし |
 | 5 承認 | 実UIで承認sheet表示中ファイル不存在、Approve後の内容一致。HTTPでは拒否後不存在も確認 | なし |
-| 6 ルーティン | アプリ終了中のcalendar自然起動、実モデルalpha/beta回答、exit 0、登録解除、関連プロセス残存0、既存定義不変 | macOS通知の配送確認 |
-| 7 インストール | /Applicationsにv0.1.0配置、codesign検証exit 0。installed URL指定の実起動・Settings操作1 test passed | spctlはrejected(exit 3)。ad-hoc署名のためGatekeeperの配布元認証は未達 |
-| 8 アップデート | Sparkle 2.10.1統合、EdDSA署名済みv0.1.0/v0.1.1をGitHubへ公開。認証なし配信・hash一致を確認 | v0.1.0からv0.1.1のアプリ内更新 |
+| 6 ルーティン | アプリ終了中のcalendar自然起動、実モデルalpha/beta回答、通知delivered、exit 0、登録解除、関連6プロセス残存0、既存定義不変 | なし |
+| 7 インストール | /Applicationsに配置し実起動、codesign検証exit 0。実更新後のv0.1.1/build2も起動・Readyを確認 | spctlはrejected(exit 3)。ad-hoc署名のため標準Gatekeeper評価の合格は未達 |
+| 8 アップデート | 公開v0.1.0→v0.1.1の通常Sparkle UI更新、別PIDで再起動、旧プロセス残存0、新server Ready、署名・公開zip一致を確認 | なし |
 
 HIG: 画面の構成はNavigationSplitView・標準ツールバー、設定はSettingsシーン、承認はsheet、読み込みは不定進捗と経過時間、状態はアイコンと文言を併記します。対応項目の詳細は [UI設計](ui-design.md) に記載しています。
 
@@ -100,3 +100,33 @@ ModernInspectUI-8は保存済みの合成会話を使用し、`TEST SUCCEEDED`�
 - `/Applications`のv0.1.0は、公開zip内の72ファイル・symlinkの内容と一致しています。v0.1.1を直接コピーせず、Sparkle実更新の開始点を維持しています。
 
 実Sparkle更新のGUI操作は、手動の通知設定を依頼した利用者から操作終了の返信があるまで停止しています。公開・署名・配信の成功は、実インストール更新の成功を意味しません。
+
+## 通知付きルーティンの実証（2026-11-16）
+
+利用者がmacOSの通知をONにした後、installed helper単体が`Routine notification delivered` / exit 0を返しました。次に通知付きcalendar検証を実行。最初の試行は検証用UUIDの大小文字不一致で通知helperを通常アプリと誤認したため、テスト側だけをproductionと同じ小文字UUIDに修正しました。公開アプリ本体・既存タグは変更していません。
+
+再試験は08:41 JSTに自然発火し、`status: success`、`notification_status: delivered`、`notification_exit_code: 0`、LaunchAgent `last exit code: 0`。アプリ閉鎖状態、既知ファイル回答、通知到達、既存ルーティン定義不変を確認。観測6プロセスの残存0、bootout exit 0、登録解除・検証用plist削除を確認しました。
+
+## 最終チャットUIの再検証（2026-11-16）
+
+`xcodebuild -project InHouseAgent.xcodeproj -scheme InHouseAgentRuntimeUI -configuration Debug -derivedDataPath build -destination 'platform=macOS,arch=arm64' -resultBundlePath /tmp/InHouseAgent-RuntimeUI-Resume.xcresult test` → `1 test, 0 failures`（92.673秒）。
+
+最終のSwiftUI・SDK相関修正を含む状態で、生成中の本文3状態、list_directoryが1行のcompletedになり引数・結果を保持、承認前ファイル不存在、Approve後に`APPROVED`内容一致、Stopとworkspace設定復元まで成功しました。
+
+## 実アップデートの完了（2026-11-16）
+
+`xcodebuild -project InHouseAgent.xcodeproj -scheme InHouseAgentUpdateUI -configuration Debug -derivedDataPath build -destination 'platform=macOS,arch=arm64' -resultBundlePath /tmp/InHouseAgent-UpdateUI-2.xcresult test` → `TEST SUCCEEDED`（59.884秒）。初回は通常ウィンドウとTouch Barの同名ボタンでtest queryが曖昧になったため、通常ウィンドウのSparkle identifierに限定して再試験しました。本体コードや公開タグは変更していません。
+
+`/Applications/In-House Agent.app`のv0.1.0から通常の「Check for Updates… → Install Update → Install and Relaunch」を操作し、v0.1.1/build2へ更新。インストール先の一致とアプリPIDの変更を確認しました。旧sidecar PID48458と独立監視の旧プロセス3件はすべて終了しました。
+
+続く`-only-testing:InHouseAgentUITests/UpdateUITests/testUpdatedInstalledServerReady`は1 test / 0 failures（2.714秒）。Sparkleが再起動したアプリへ追加のlaunchをせず接続し、新sidecar PID48756のReadyを確認して通常利用できる状態で残しました。
+
+親側の`codesign --verify --deep --strict '/Applications/In-House Agent.app'`はexit 0。公開v0.1.1 zipの72ファイル・symlinkと実インストール内容のhashが一致し、Pythonキャッシュは0件です。
+
+HIG対応: 更新はSparkle標準ウィンドウ、通知はmacOSの通知機構、状態確認はアイコンと日本語文言を備える標準Formで実証しました。MacのGUI自動操作は終了しています。
+
+## 残る制約
+
+- インストール済みアプリにquarantine属性はなく、標準Gatekeeper評価はrejectedでした。通常のローカル起動・Sparkle更新の成功を、ダウンロード配布物のGatekeeper審査合格とは扱いません。ユーザー指定のad-hoc個人利用として完了条件を扱うか、Developer ID署名・公証まで必須かを確認しています。[Appleの公証要件](https://developer.apple.com/documentation/security/notarizing-macos-software-before-distribution/)
+- LiteRT接続はSDK 0.1.23の仕様上Thoughtテキストを転送しません。思考欄には未提供と表示します。
+- Google/OpenAI互換クラウドの実APIキーを使う推論は未検証です。設定・Keychain・認証中継の検証と、実クラウド推論を区別しています。

@@ -2,9 +2,11 @@
 
 SwiftUIで作る個人用macOSエージェントです。Google Antigravity Python SDKをローカルのサイドカーに置き、Gemma 4 26B A4BをLiteRT-LMで実行します。
 
-**開発・検証中です。** ビルド成功は、実モデル推論、LaunchAgent通知、Gatekeeper、アプリ内更新の成功を意味しません。実機確認の結果は [検証記録](docs/verification.md) に分けて記載します。
+**個人利用向けのad-hoc署名版です。** 実モデル推論、承認付き書き込み、LaunchAgentの通知、v0.1.0からv0.1.1へのアプリ内更新を実機で確認しています。Appleの公証はなく、標準Gatekeeper評価はrejectedです。実証の範囲と制約は[検証記録](docs/verification.md)に記載します。
 
 ## セットアップ
+
+配布物は[GitHub Releases](https://github.com/taisei1989/in-house-agent/releases/latest)から取得できます。
 
 - Apple Silicon、macOS 14以降、ユニファイドメモリ24GB以上が必要です。
 - Python 3.10以降が必要です。固定した依存関係のインストール実績はPython 3.14と3.15です。
@@ -56,10 +58,10 @@ xcodebuild -project InHouseAgent.xcodeproj -scheme InHouseAgent \
 Sparkle 2の署名鍵はKeychainに置き、`release-config.json` には公開鍵だけを保存します。既存鍵を上書き・再生成せず、保管を継続してください。
 
 ```sh
-scripts/release.sh 0.1.0 1 taisei1989/in-house-agent
+scripts/release.sh 0.1.2 3 taisei1989/in-house-agent
 ```
 
-このコマンドはビルド・署名・zip・署名付きappcastをローカルに準備します。公開はcleanなmainブランチから `scripts/release.sh VERSION BUILD taisei1989/in-house-agent --publish` の1コマンドで行います。署名検証後にバージョン設定だけをコミットし、タグとブランチをatomic pushしてGitHub Releaseを作成します。事前条件や失敗時の復旧、Developer IDがある場合の公証、GitHub Actionsについては [リリース手順](docs/releases.md) を参照してください。
+この例は次のバージョンをローカルに準備するものです。コマンドはビルド・署名・zip・署名付きappcastを生成します。公開はcleanなmainブランチから `scripts/release.sh VERSION BUILD taisei1989/in-house-agent --publish` の1コマンドで行います。署名検証後にバージョン設定だけをコミットし、タグとブランチをatomic pushしてGitHub Releaseを作成します。事前条件や失敗時の復旧、Developer IDがある場合の公証、GitHub Actionsについては [リリース手順](docs/releases.md) を参照してください。
 
 現在の署名方式は個人利用向けad-hocです。Appleによる公証やDeveloper IDの信頼とは異なります。Gatekeeperの結果と初回起動の確認を、署名検証とは別に扱います。
 

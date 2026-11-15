@@ -75,7 +75,9 @@ def verify(args):
         raise SystemExit("Quit the app first; this test verifies scheduled execution while the app is closed.")
     if args.notify_executable and not (Path(args.notify_executable).is_file() and os.access(args.notify_executable, os.X_OK)):
         raise SystemExit("The requested notification executable does not exist or is not executable")
-    identifier = str(uuid.uuid4()).upper()
+    # The production runner normalizes UUIDs before writing result paths and
+    # invoking the notification helper. Use that same canonical form here.
+    identifier = str(uuid.uuid4())
     label = "com.taisei1989.inhouseagent.verification." + identifier
     target = f"gui/{os.getuid()}/{label}"
     root = Path(tempfile.mkdtemp(prefix="inhouse-routine-verification-"))

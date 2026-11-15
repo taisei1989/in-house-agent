@@ -13,7 +13,7 @@
 レビュー済みのソースと初期設定をコミットし、リポジトリの既定ブランチをチェックアウトしておきます。`origin` の取得先・push先は指定したGitHubリポジトリと一致させます。そこから次の1コマンドで、設定のバージョン更新、ビルド、署名検証、設定だけのコミット、タグ作成、branchとtagのatomic push、GitHub Release公開まで実行します。
 
 ```sh
-scripts/release.sh 0.1.1 2 taisei1989/in-house-agent --publish
+scripts/release.sh 0.1.2 3 taisei1989/in-house-agent --publish
 ```
 
 初回は `0.1.0 1` を指定できます。既に存在するローカルタグ・リモートタグ・リリースは上書きしません。アプリ名、Bundle ID、鍵、公開先を変更する操作はリリースコマンドに含めず、事前に別途レビュー・コミットしてください。
@@ -21,7 +21,7 @@ scripts/release.sh 0.1.1 2 taisei1989/in-house-agent --publish
 公開せず生成物だけを確認する場合は `--publish` を省略します。
 
 ```sh
-scripts/release.sh 0.1.1 2 taisei1989/in-house-agent
+scripts/release.sh 0.1.2 3 taisei1989/in-house-agent
 ```
 
 この準備モードは `release-config.json` の変更を作業ツリーに残します。その後公開する場合は、設定変更を確認してコミットし、クリーンな状態から同じ引数に `--publish` を付けて実行してください。手動のタグ作成やpushは不要です。公開モードはこの場合も再ビルド・再署名してから公開します。
@@ -40,7 +40,7 @@ Pythonサイドカーは明示した実行用 `.py` ファイルだけをRelease
 ```sh
 SIGN_IDENTITY='Developer ID Application: YOUR NAME (TEAMID)' \
 NOTARY_PROFILE=in-house-agent-notary \
-scripts/release.sh 0.1.1 2 taisei1989/in-house-agent --publish
+scripts/release.sh 0.1.2 3 taisei1989/in-house-agent --publish
 ```
 
 ## 失敗時の扱い
@@ -62,7 +62,7 @@ v0.1.0 を `/Applications` にインストールし、v0.1.1 を公開してか�
 - `Missing Sparkle …`: 先にパッケージを解決してください。別配置の場合は `SPARKLE_BIN` を指定します。
 - 更新が見つからない: 公開された appcast の URL、`CFBundleVersion` の増加、`SUPublicEDKey` と署名鍵の一致を確認します。同じビルド番号は再試行用で、新しいリリースでは増加が必要です。
 - framework のロードに失敗: ad-hoc モードは Hardened Runtime を無効にしています。Developer ID モードでは Framework とヘルパーを含む署名を Xcode に任せます。
-- Gatekeeper に拒否される: ad-hoc は Apple の公証済み配布ではありません。ローカル起動成功とダウンロードした配布物の Gatekeeper 検証は区別してください。
+- Gatekeeper に拒否される: ad-hoc は Apple の公証済み配布ではありません。ローカル起動成功とダウンロードした配布物の Gatekeeper 検証は区別してください。個人利用では、Appleが案内する[対象アプリの「このまま開く」手順](https://support.apple.com/en-us/102445)で明示的に許可できます。これはDeveloper ID署名・公証の取得とは異なります。
 - CI: ワークフローはビルド用です。署名鍵を自動で新規作成しません。公開は Keychain に同じ EdDSA 鍵を保持する Mac で行います。
 
 公式資料: [導入と鍵管理](https://sparkle-project.org/documentation/)、[更新公開](https://sparkle-project.org/documentation/publishing/)、[SwiftUI 連携](https://sparkle-project.org/documentation/programmatic-setup/)。

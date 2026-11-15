@@ -395,6 +395,40 @@ private func descendants(of pid: Int32) -> [Int32] {
 /// Never installs a bundle itself; every update action uses Sparkle's real UI.
 final class UpdateUITests: XCTestCase {
     @MainActor
+    func testUpdatedInstalledServerReady() throws {
+        continueAfterFailure = false
+        let installed = URL(fileURLWithPath: "/Applications/In-House Agent.app")
+        let plist = try XCTUnwrap(PropertyListSerialization.propertyList(from: Data(contentsOf: installed.appendingPathComponent("Contents/Info.plist")), format: nil) as? [String: Any])
+        XCTAssertEqual(plist["CFBundleShortVersionString"] as? String, "0.1.1")
+        let app = XCUIApplication(url: installed)
+        XCTAssertNotEqual(app.state, .notRunning, "Attach to Sparkle's relaunched app; do not manufacture a relaunch")
+        app.activate()
+        XCTAssertTrue(app.wait(for: .runningForeground, timeout: 15))
+        try requireForeground(app)
+        XCTAssertEqual(NSWorkspace.shared.frontmostApplication?.bundleURL?.standardizedFileURL, installed.standardizedFileURL)
+        try requireForeground(app); app.descendants(matching: .any).matching(identifier: "nav.server").firstMatch.click()
+        func status() -> String {
+            app.descendants(matching: .any).matching(identifier: "server.status").allElementsBoundByIndex.map { $0.label + (($0.value as? String) ?? "") }.joined()
+        }
+        let current = status()
+        if current.contains("Stopped") || current.contains("停止中") {
+            let menu = app.menuBars.menuBarItems["Server"].exists ? app.menuBars.menuBarItems["Server"] : app.menuBars.menuBarItems["サーバー"]
+            try requireForeground(app); menu.click()
+            let start = menu.menus.menuItems["Start Server"].exists ? menu.menus.menuItems["Start Server"] : menu.menus.menuItems["サーバーを起動"]
+            try requireForeground(app); start.click()
+        }
+        let ready = NSPredicate { _, _ in status().contains("Ready") || status().contains("準備完了") }
+        XCTAssertEqual(XCTWaiter.wait(for: [XCTNSPredicateExpectation(predicate: ready, object: nil)], timeout: 120), .completed)
+        let record = try XCTUnwrap(JSONSerialization.jsonObject(with: Data(contentsOf: applicationSupportURL.appendingPathComponent("server.json"))) as? [String: Any])
+        let pid = try XCTUnwrap(record["pid"] as? Int32)
+        XCTAssertEqual(kill(pid, 0), 0)
+        let evidence = XCTAttachment(string: "Installed 0.1.1: server Ready, PID=\(pid)")
+        evidence.name = "updated-server-ready"; evidence.lifetime = .keepAlways; add(evidence)
+        let screenshot = XCTAttachment(screenshot: app.windows.firstMatch.screenshot())
+        screenshot.name = "installed-0.1.1-server-ready"; screenshot.lifetime = .keepAlways; add(screenshot)
+    }
+
+    @MainActor
     func testInstalledReleaseUpdatesInPlace() throws {
         continueAfterFailure = false
         let installedURL = URL(fileURLWithPath: "/Applications/In-House Agent.app", isDirectory: true)
@@ -413,6 +447,7 @@ final class UpdateUITests: XCTestCase {
         try requireForeground(app)
         XCTAssertEqual(NSWorkspace.shared.frontmostApplication?.bundleURL?.standardizedFileURL, installedURL.standardizedFileURL,
                        "The update target must be the installed Release, never the Debug product")
+        let priorApplicationPID = try XCTUnwrap(NSWorkspace.shared.frontmostApplication?.processIdentifier)
         var succeeded = false
         addTeardownBlock { @MainActor in if !succeeded { app.terminate() } }
         try requireForeground(app)
@@ -435,7 +470,7 @@ final class UpdateUITests: XCTestCase {
         XCTAssertTrue(check.isEnabled)
         try requireForeground(app)
         check.click()
-        let install = app.buttons["Install Update"]
+        let install = app.buttons["SPUUserUpdateChoiceInstall"]
         XCTAssertTrue(install.waitForExistence(timeout: 90), app.debugDescription)
         let offer = XCTAttachment(screenshot: app.windows.firstMatch.screenshot())
         offer.name = "sparkle-update-offer"
@@ -443,7 +478,7 @@ final class UpdateUITests: XCTestCase {
         add(offer)
         try requireForeground(app)
         install.click()
-        let relaunch = app.buttons["Install and Relaunch"]
+        let relaunch = app.windows.buttons["Install and Relaunch"].firstMatch
         XCTAssertTrue(relaunch.waitForExistence(timeout: 180), app.debugDescription)
         try requireForeground(app)
         relaunch.click()
@@ -453,6 +488,7 @@ final class UpdateUITests: XCTestCase {
         try requireForeground(app)
         XCTAssertEqual(NSWorkspace.shared.frontmostApplication?.bundleURL?.standardizedFileURL, installedURL.standardizedFileURL)
         XCTAssertEqual(installedVersion(), "0.1.1")
+        XCTAssertNotEqual(NSWorkspace.shared.frontmostApplication?.processIdentifier, priorApplicationPID, "Sparkle must relaunch a new installed application process")
         let stopped = NSPredicate { _, _ in
             ([oldPID] + oldChildren).allSatisfy { kill($0, 0) != 0 && errno == ESRCH }
         }
