@@ -157,11 +157,15 @@ struct ChatTurnView: View {
                 Spacer()
                 if !message.user { AgentStatusView(status: message.status) }
             }
-            if !message.user && !message.thought.isEmpty {
+            if !message.user {
                 DisclosureGroup {
                     VStack(alignment: .leading, spacing: 8) {
                         Text("Text provided by the model through the SDK. It may be incomplete or incorrect.").font(.caption).foregroundStyle(.secondary)
-                        Text(message.thought).font(.callout).textSelection(.enabled)
+                        if message.thought.isEmpty {
+                            Text("This model connection has not provided thinking text.").font(.callout).foregroundStyle(.secondary)
+                        } else {
+                            Text(message.thought).font(.callout).textSelection(.enabled)
+                        }
                         if message.thoughtTruncated { Text("Some content was omitted from this preview.").font(.caption).foregroundStyle(.secondary) }
                     }.padding(.top, 8)
                 } label: { Label("Model thinking", systemImage: "brain").font(.caption).foregroundStyle(.secondary) }
@@ -178,8 +182,8 @@ struct ChatTurnView: View {
             }
             if !message.text.isEmpty {
                 ChatMarkdownView(text: message.text)
-                    .accessibilityElement(children: .ignore).accessibilityLabel(message.user ? Text("Your message") : Text("Assistant response"))
-                    .accessibilityValue(message.text).accessibilityIdentifier(message.user ? "chat.user" : "chat.assistant")
+                    .accessibilityElement(children: .ignore).accessibilityLabel(Text(message.text))
+                    .accessibilityIdentifier(message.user ? "chat.user" : "chat.assistant")
             }
             if !message.text.isEmpty {
                 HStack(spacing: 12) {
@@ -234,7 +238,8 @@ struct ToolRunView: View {
             }.padding(.top, 8)
         } label: {
             HStack { Text(tool.name).font(.system(.callout, design: .monospaced)); Spacer(); AgentStatusView(status: tool.status) }
-        }.padding(12).background(Color.primary.opacity(0.035), in: RoundedRectangle(cornerRadius: 10))
+        }.accessibilityIdentifier("chat.tool.run.\(tool.id)")
+            .padding(12).background(Color.primary.opacity(0.035), in: RoundedRectangle(cornerRadius: 10))
     }
     private func preview(_ title: LocalizedStringKey, _ value: String) -> some View {
         VStack(alignment: .leading, spacing: 4) {
@@ -245,7 +250,7 @@ struct ToolRunView: View {
                     NSPasteboard.general.clearContents(); NSPasteboard.general.setString(value, forType: .string)
                 }.buttonStyle(.borderless).labelStyle(.iconOnly).help("Copy details")
             }
-            ScrollView(.horizontal) { Text(value).font(.system(.caption, design: .monospaced)).textSelection(.enabled).padding(8) }
+            ScrollView(.horizontal) { Text(value).font(.system(.caption, design: .monospaced)).textSelection(.enabled).padding(8).accessibilityIdentifier("chat.tool.preview") }
                 .background(.background, in: RoundedRectangle(cornerRadius: 6))
         }
     }

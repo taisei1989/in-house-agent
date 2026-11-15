@@ -30,3 +30,7 @@
 ## HIGと検証
 
 NavigationSplitView、Settingsシーン、標準DisclosureGroup、alert・sheetを使います。色と背景はシステム由来にし、状態は色だけに依存させません。固定UI文言はString Catalogの日英、アイコン操作はVoiceOverラベル、キーボード操作を用意します。実UI検証の合否は[検証記録](verification.md)に記載します。この設計文書自体は動作の証明ではありません。
+
+## 現SDKの思考出力の制約
+
+実環境のgoogle-antigravity 0.1.23では、公開`Thought`型はありますが、LiteRT側の`_stream_response`は本文・ツール呼び出しを転送し、思考フィールドを転送していません。`lightweight()`が思考を無効化しているわけではありません。実Gemma応答でもThoughtは0件でした。UIはこの場合に未提供と明示し、SDKが提供する接続の公開Thoughtだけを表示します。SDK私的APIやモデル内部を抽出する変更は加えていません。

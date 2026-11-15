@@ -137,6 +137,21 @@ final class RuntimeUITests: XCTestCase {
         waitForSend(app)
         let answerTexts = app.descendants(matching: .any).matching(identifier: "chat.assistant").allElementsBoundByIndex.map { ($0.value as? String).flatMap { $0.isEmpty ? nil : $0 } ?? $0.label }
         XCTAssertTrue(answerTexts.contains { $0.contains("alpha.txt") && $0.contains("beta.md") }, "Synthetic workspace reply: \(answerTexts)")
+        let savedRow = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH %@ AND label BEGINSWITH %@", "history.item.", "Use list_directory")).firstMatch
+        XCTAssertTrue(savedRow.waitForExistence(timeout: 5))
+        let savedID = String(savedRow.identifier.dropFirst("history.item.".count))
+        XCTAssertNotNil(UUID(uuidString: savedID))
+        let savedData = try Data(contentsOf: applicationSupportURL.appendingPathComponent("Conversations").appendingPathComponent(savedID + ".json"))
+        let saved = try XCTUnwrap(JSONSerialization.jsonObject(with: savedData) as? [String: Any])
+        XCTAssertTrue((saved["title"] as? String ?? "").hasPrefix("Use list_directory"))
+        let savedMessages = try XCTUnwrap(saved["messages"] as? [[String: Any]])
+        let activities = savedMessages.flatMap { $0["tools"] as? [[String: Any]] ?? [] }.filter { $0["name"] as? String == "list_directory" }
+        XCTAssertEqual(activities.count, 1, "One real directory call must render one correlated activity")
+        XCTAssertEqual(activities.first?["status"] as? String, "completed")
+        XCTAssertFalse((activities.first?["args"] as? String ?? "").isEmpty)
+        XCTAssertTrue((activities.first?["result"] as? String ?? "").contains("alpha.txt"))
+        let correlated = XCTAttachment(string: "Real list_directory activity: one completed row with arguments and result preserved")
+        correlated.name = "real-tool-correlation"; correlated.lifetime = .keepAlways; add(correlated)
         let streamEvidence = XCTAttachment(string: "Distinct visible response states before completion: \(visibleResponseStates.count)")
         streamEvidence.name = "streaming-observation"
         streamEvidence.lifetime = .keepAlways
@@ -486,6 +501,79 @@ final class NotificationUITests: XCTestCase {
 
 final class ModernUITests: XCTestCase {
     @MainActor
+    func testInspectSavedSyntheticResponse() throws {
+        continueAfterFailure = false
+        let directory = applicationSupportURL.appendingPathComponent("Conversations")
+        guard FileManager.default.fileExists(atPath: directory.path) else { throw XCTSkip("No existing synthetic diagnostic conversation") }
+        let files = try FileManager.default.contentsOfDirectory(at: directory, includingPropertiesForKeys: [.contentModificationDateKey]).filter { $0.pathExtension == "json" }
+        guard !files.isEmpty else { throw XCTSkip("No existing synthetic diagnostic conversation") }
+        let latest = try XCTUnwrap(files.max { (try? $0.resourceValues(forKeys: [.contentModificationDateKey]).contentModificationDate ?? .distantPast) ?? .distantPast < (try? $1.resourceValues(forKeys: [.contentModificationDateKey]).contentModificationDate ?? .distantPast) ?? .distantPast })
+        let record = try XCTUnwrap(JSONSerialization.jsonObject(with: Data(contentsOf: latest)) as? [String: Any])
+        guard (record["title"] as? String ?? "").hasPrefix("UI-") else { throw XCTSkip("The latest conversation is not the synthetic UI fixture") }
+        let id = try XCTUnwrap(record["id"] as? String)
+        let app = XCUIApplication()
+        app.launchArguments = ["-AppleLanguages", "(ja)", "-AppleLocale", "ja_JP", "-autoStartServer", "NO"]
+        app.launch(); app.activate()
+        XCTAssertTrue(app.wait(for: .runningForeground, timeout: 15))
+        addTeardownBlock { @MainActor in app.terminate() }
+        let row = app.buttons["history.item." + id]
+        XCTAssertTrue(row.waitForExistence(timeout: 10))
+        try requireForeground(app); row.click()
+        screenshot(app, name: "japanese-synthetic-history-diagnostic")
+        let response = app.descendants(matching: .any).matching(identifier: "chat.assistant")
+        let text = response.allElementsBoundByIndex.map { "type=\($0.elementType.rawValue) label=\($0.label) value=\($0.value ?? "nil") debug=\($0.debugDescription)" }.joined(separator: "\n")
+        let item = XCTAttachment(string: text); item.name = "synthetic-response-AX"; item.lifetime = .keepAlways; add(item)
+        let tools = app.descendants(matching: .any).matching(identifier: "chat.tools").firstMatch
+        XCTAssertTrue(tools.exists)
+        try requireForeground(app); tools.coordinate(withNormalizedOffset: CGVector(dx: 0, dy: 0.5)).withOffset(CGVector(dx: 27, dy: 0)).click()
+        let thinking = app.descendants(matching: .any).matching(identifier: "chat.thinking").firstMatch
+        if thinking.exists { try requireForeground(app); thinking.coordinate(withNormalizedOffset: CGVector(dx: 0, dy: 0.5)).withOffset(CGVector(dx: 27, dy: 0)).click() }
+        screenshot(app, name: "japanese-after-tool-disclosure")
+        let disclosureState = XCTAttachment(string: "value=\(tools.value ?? "nil") rect=\(tools.frame)"); disclosureState.lifetime = .keepAlways; add(disclosureState)
+        let snapshot = app.disclosureTriangles.allElementsBoundByIndex.map { "id=\($0.identifier) label=\($0.label) value=\($0.value ?? "nil") rect=\($0.frame)" }.joined(separator: "\n")
+        let ax = XCTAttachment(string: snapshot); ax.name = "synthetic-disclosures-AX"; ax.lifetime = .keepAlways; add(ax)
+        let transcript = app.scrollViews.containing(.disclosureTriangle, identifier: "chat.tools").firstMatch
+        try requireForeground(app); transcript.scroll(byDeltaX: 0, deltaY: -300)
+        let completed = app.disclosureTriangles.matching(NSPredicate(format: "label CONTAINS %@ AND label CONTAINS %@", "list_directory", "完了")).firstMatch
+        XCTAssertTrue(completed.waitForExistence(timeout: 5))
+        try requireForeground(app); completed.click()
+        if String(describing: completed.value ?? "") != "1" {
+            try requireForeground(app); completed.coordinate(withNormalizedOffset: CGVector(dx: 0, dy: 0.5)).withOffset(CGVector(dx: 27, dy: 0)).click()
+        }
+        XCTAssertEqual(String(describing: completed.value ?? ""), "1")
+        try requireForeground(app); transcript.scroll(byDeltaX: 0, deltaY: -250)
+        screenshot(app, name: "japanese-expanded-result-before-assertion")
+        let resultText = app.staticTexts.matching(NSPredicate(format: "value CONTAINS %@", "modern-ui.txt")).firstMatch
+        XCTAssertTrue(resultText.waitForExistence(timeout: 5))
+        screenshot(app, name: "japanese-synthetic-tool-expanded")
+        let details = XCTAttachment(string: app.windows.firstMatch.debugDescription); details.name = "synthetic-expanded-window-AX"; details.lifetime = .keepAlways; add(details)
+        XCTAssertTrue(response.allElementsBoundByIndex.contains { (($0.value as? String).flatMap { $0.isEmpty ? nil : $0 } ?? $0.label).contains("modern-ui.txt") })
+        try requireForeground(app); app.buttons["chat.new"].click()
+        let search = app.textFields["history.search"]
+        try replace(search, text: String((record["title"] as? String ?? "").prefix(11)), app: app)
+        XCTAssertTrue(row.waitForExistence(timeout: 10))
+        try requireForeground(app); row.click()
+        XCTAssertFalse(app.descendants(matching: .any).matching(identifier: "chat.input").firstMatch.isEnabled)
+        try requireForeground(app); app.typeKey("q", modifierFlags: .command)
+        XCTAssertTrue(app.wait(for: .notRunning, timeout: 20))
+        app.launch(); app.activate()
+        XCTAssertTrue(app.wait(for: .runningForeground, timeout: 15))
+        XCTAssertTrue(row.waitForExistence(timeout: 10))
+        try requireForeground(app); row.click()
+        XCTAssertTrue(response.allElementsBoundByIndex.contains { (($0.value as? String).flatMap { $0.isEmpty ? nil : $0 } ?? $0.label).contains("modern-ui.txt") })
+        XCTAssertFalse(app.descendants(matching: .any).matching(identifier: "chat.input").firstMatch.isEnabled)
+        XCTAssertTrue(app.buttons["サーバーを起動"].exists)
+        screenshot(app, name: "japanese-restored-history")
+        try requireForeground(app); app.typeKey(",", modifierFlags: .command)
+        let field = app.textFields["settings.workspacePath"]
+        XCTAssertTrue(field.waitForExistence(timeout: 10))
+        if let current = field.value as? String, URL(fileURLWithPath: current).lastPathComponent.hasPrefix("InHouseAgent-UITest-") {
+            try replace(field, text: applicationSupportURL.appendingPathComponent("Workspace").path, app: app)
+        }
+        try requireForeground(app); app.typeKey("w", modifierFlags: .command)
+    }
+
+    @MainActor
     func testJapaneseToolsAndPersistentConversation() throws {
         continueAfterFailure = false
         let app = XCUIApplication()
@@ -520,19 +608,25 @@ final class ModernUITests: XCTestCase {
         try replace(input, text: "\(marker) Use list_directory to list the files in the workspace. Report the exact file names without modifying anything.", app: app)
         try requireForeground(app); app.buttons["chat.send"].click()
         let answered = NSPredicate { _, _ in
-            app.buttons["chat.send"].exists && app.descendants(matching: .any).matching(identifier: "chat.assistant").allElementsBoundByIndex.contains { ($0.value as? String ?? $0.label).contains("modern-ui.txt") }
+            app.buttons["chat.send"].exists && app.descendants(matching: .any).matching(identifier: "chat.assistant").allElementsBoundByIndex.contains { (($0.value as? String).flatMap { $0.isEmpty ? nil : $0 } ?? $0.label).contains("modern-ui.txt") }
         }
         XCTAssertEqual(XCTWaiter.wait(for: [XCTNSPredicateExpectation(predicate: answered, object: nil)], timeout: 300), .completed, app.debugDescription)
         let thinking = app.descendants(matching: .any).matching(identifier: "chat.thinking").firstMatch
-        if thinking.exists { try requireForeground(app); thinking.click() }
+        if thinking.exists { try requireForeground(app); thinking.coordinate(withNormalizedOffset: CGVector(dx: 0, dy: 0.5)).withOffset(CGVector(dx: 27, dy: 0)).click() }
         let disclosure = app.descendants(matching: .any).matching(identifier: "chat.tools").firstMatch
         XCTAssertTrue(disclosure.exists, app.debugDescription)
-        try requireForeground(app); disclosure.click()
-        let tool = app.staticTexts.matching(NSPredicate(format: "label CONTAINS %@", "list_directory")).firstMatch
-        XCTAssertTrue(tool.exists, app.debugDescription)
+        try requireForeground(app); disclosure.coordinate(withNormalizedOffset: CGVector(dx: 0, dy: 0.5)).withOffset(CGVector(dx: 27, dy: 0)).click()
+        let transcript = app.scrollViews.containing(.disclosureTriangle, identifier: "chat.tools").firstMatch
+        try requireForeground(app); transcript.scroll(byDeltaX: 0, deltaY: -300)
+        let tool = app.disclosureTriangles.matching(NSPredicate(format: "label CONTAINS %@ AND label CONTAINS %@", "list_directory", "完了")).firstMatch
+        XCTAssertTrue(tool.waitForExistence(timeout: 5))
         try requireForeground(app); tool.click()
-        XCTAssertTrue(app.staticTexts["結果"].waitForExistence(timeout: 5), app.debugDescription)
-        let evidence = XCTAttachment(string: thinking.exists ? "SDK thinking disclosure exists and was expanded; tool activity expanded." : "SDK provided no thinking text for this response; tool activity expanded.")
+        if String(describing: tool.value ?? "") != "1" {
+            try requireForeground(app); tool.coordinate(withNormalizedOffset: CGVector(dx: 0, dy: 0.5)).withOffset(CGVector(dx: 27, dy: 0)).click()
+        }
+        try requireForeground(app); transcript.scroll(byDeltaX: 0, deltaY: -250)
+        XCTAssertTrue(app.staticTexts.matching(NSPredicate(format: "value CONTAINS %@", "modern-ui.txt")).firstMatch.waitForExistence(timeout: 5))
+        let evidence = XCTAttachment(string: "Thinking disclosure expanded; LiteRT does not provide thinking text. Tool result expanded and verified.")
         evidence.name = "modern-disclosures"; evidence.lifetime = .keepAlways; add(evidence)
         screenshot(app, name: "japanese-tool-result")
         try requireForeground(app); app.buttons["chat.new"].click()
@@ -553,7 +647,7 @@ final class ModernUITests: XCTestCase {
         XCTAssertTrue(restored.waitForExistence(timeout: 10))
         try requireForeground(app); restored.click()
         XCTAssertFalse(app.descendants(matching: .any).matching(identifier: "chat.input").firstMatch.isEnabled)
-        XCTAssertTrue(app.descendants(matching: .any).matching(identifier: "chat.assistant").allElementsBoundByIndex.contains { ($0.value as? String ?? $0.label).contains("modern-ui.txt") })
+        XCTAssertTrue(app.descendants(matching: .any).matching(identifier: "chat.assistant").allElementsBoundByIndex.contains { (($0.value as? String).flatMap { $0.isEmpty ? nil : $0 } ?? $0.label).contains("modern-ui.txt") })
         XCTAssertTrue(app.buttons["サーバーを起動"].exists)
         screenshot(app, name: "japanese-restored-history")
     }

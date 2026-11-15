@@ -68,3 +68,9 @@ Keychainの使用を利用者が許可した後、最新修正でv0.1.0 zipと�
 出力・結果: `runs: 1`、`last exit code: 0`、`status: success`、alpha.txt / beta.mdの両名一致、`unregistered: true`、`remaining_owned_processes: []`。既存ルーティンの定義は不変です。この先行テストは通知を除外しており、通知成功とは扱いません。
 
 インストール先起動: NotificationUIは`1 passed / 0 failed`（13秒）。実際のfrontmost bundle URLが`/Applications/In-House Agent.app`と一致し、Settingsの通知要求ボタン操作まで成功しました。ただしproduction通知helperは`Notification permission is not granted.` / exit 1となり、OSの許可は未成立です。通知要求操作と配送成功を分けて扱います。
+
+## 日本語の新UI
+
+ModernInspectUI-8は保存済みの合成会話を使用し、`TEST SUCCEEDED`。本文のアクセシビリティラベル、思考未提供の説明を展開、ツールの外側・個別詳細の展開と結果本文、新規チャット、履歴検索、閲覧専用状態、通常終了後の再起動・本文復元・停止中の起動導線を確認しました。モデルの新規推論は先行ModernUIで成功した結果を再利用しています。LiteRT接続が思考を返さない制約を、思考本文の表示成功と取り違えません。
+
+最新版のPython統合回帰: `PYTHONDONTWRITEBYTECODE=1 .venv/bin/python -m pytest sidecar/test_server.py sidecar/test_cloud.py sidecar/test_event_preview.py -q` → `28 passed in 1.87s`。sandbox内の初回はlocalhost待ち受け制限によって2件失敗したため、ループバック通信を許可して再実行しました。外部の実クラウドAPIは呼んでいません。

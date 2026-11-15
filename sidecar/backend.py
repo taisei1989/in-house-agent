@@ -5,6 +5,7 @@ from typing import Callable
 import asyncio
 import threading
 import json
+import uuid
 from .cloud_proxy import OpenAICloudProxy, register_secret, redact
 
 
@@ -155,19 +156,41 @@ class SDKBackend:
         from google.antigravity.types import Text, Thought, ToolCall, ToolResult
         self.tool_results.clear()
         emitted = set()
+        aliases = {}
+        pending_calls = {}
+        terminal_states = {}
+        emitted_args = {}
         thought_remaining = 16 * 1024
         thought_truncation_sent = False
 
         def completed(result):
-            identifier = result.id or result.step_id
+            # Built-in StepUpdate chunks use trajectory:step as their id;
+            # post_tool_call hooks also carry the harness's distinct call_id.
+            # Correlate using both public identifiers, never name alone when
+            # more than one operation is pending.
+            keys = [value for value in (result.id, result.step_id) if value]
+            matches = {aliases[key] for key in keys if key in aliases}
+            identifier = next(iter(matches)) if len(matches) == 1 else None
+            if identifier is None and not matches and not result.step_id:
+                candidates = [key for key, call in pending_calls.items()
+                              if call["name"] == str(result.name) and call["server_name"] == result.server_name]
+                if len(candidates) == 1:
+                    identifier = candidates[0]
+            if identifier is None:
+                identifier = result.id or result.step_id or str(uuid.uuid4())
+            if len(matches) <= 1:
+                for key in keys:
+                    aliases.setdefault(key, identifier)
             key = (identifier, str(result.name))
             if key in emitted:
                 return None
             emitted.add(key)
+            pending_calls.pop(identifier, None)
+            terminal_states[identifier] = "error" if result.error else "completed"
             result_text, result_cut = bounded_preview(result.result) if result.result is not None else ("", False)
             error_text, error_cut = bounded_preview(result.error, max(0, 8192 - len(result_text))) if result.error else ("", False)
             return {"type": "tool", "id": identifier, "name": str(result.name),
-                    "status": "error" if result.error else "completed", "result": result_text,
+                    "status": terminal_states[identifier], "result": result_text,
                     "error": error_text, "truncated": result_cut or error_cut}
 
         self.response = await self.agent.chat(prompt)
@@ -194,8 +217,24 @@ class SDKBackend:
                         yield {"type": "thought", "text": "", "truncated": True}
                         thought_truncation_sent = True
                 elif isinstance(chunk, ToolCall):
+                    keys = [value for value in (chunk.id, chunk.step_id) if value]
+                    matches = {aliases[key] for key in keys if key in aliases}
+                    identifier = next(iter(matches)) if len(matches) == 1 else chunk.id or chunk.step_id or str(uuid.uuid4())
+                    for key in keys:
+                        aliases.setdefault(key, identifier)
                     args, truncated = bounded_preview(chunk.args)
-                    yield {"type": "tool", "id": chunk.id or chunk.step_id, "name": str(chunk.name),
+                    if identifier in terminal_states:
+                        # The post-tool hook can arrive before its ToolCall
+                        # chunk is consumed. Supply late metadata without
+                        # regressing completion/error or erasing its result.
+                        if emitted_args.get(identifier) != args:
+                            emitted_args[identifier] = args
+                            yield {"type": "tool", "id": identifier, "name": str(chunk.name),
+                                   "args": args, "status": terminal_states[identifier], "truncated": truncated}
+                        continue
+                    pending_calls[identifier] = {"name": str(chunk.name), "server_name": chunk.server_name}
+                    emitted_args[identifier] = args
+                    yield {"type": "tool", "id": identifier, "name": str(chunk.name),
                            "args": args, "status": "running", "truncated": truncated}
                 elif isinstance(chunk, ToolResult):
                     event = completed(chunk)

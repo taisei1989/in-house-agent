@@ -2130,6 +2130,16 @@
           }
         }
       }
+    },
+    "This model connection has not provided thinking text.": {
+      "localizations": {
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "このモデル接続から思考テキストは提供されていません。"
+          }
+        }
+      }
     }
   },
   "version": "1.0"
