@@ -11,7 +11,7 @@
 | 5 承認 | 実UIで承認sheet表示中ファイル不存在、Approve後の内容一致。HTTPでは拒否後不存在も確認 | なし |
 | 6 ルーティン | アプリ終了中のcalendar自然起動、実モデルalpha/beta回答、exit 0、登録解除、関連プロセス残存0、既存定義不変 | macOS通知の配送確認 |
 | 7 インストール | /Applicationsにv0.1.0配置、codesign検証exit 0。installed URL指定の実起動・Settings操作1 test passed | spctlはrejected(exit 3)。ad-hoc署名のためGatekeeperの配布元認証は未達 |
-| 8 アップデート | Sparkle 2.10.1統合、EdDSA鍵をKeychainに生成 | v0.1.0からv0.1.1のアプリ内更新 |
+| 8 アップデート | Sparkle 2.10.1統合、EdDSA署名済みv0.1.0/v0.1.1をGitHubへ公開。認証なし配信・hash一致を確認 | v0.1.0からv0.1.1のアプリ内更新 |
 
 HIG: 画面の構成はNavigationSplitView・標準ツールバー、設定はSettingsシーン、承認はsheet、読み込みは不定進捗と経過時間、状態はアイコンと文言を併記します。対応項目の詳細は [UI設計](ui-design.md) に記載しています。
 
@@ -88,3 +88,15 @@ ModernInspectUI-8は保存済みの合成会話を使用し、`TEST SUCCEEDED`�
 最終ツール相関修正を含むv0.1.0（build 1、zip 4,047,517 bytes）とv0.1.1（build 2、zip 4,047,531 bytes）をローカルに準備しました。双方Releaseビルド・codesign・zip/appcast署名検証が成功。v0.1.1の準備にはignoredな別configを使い、追跡中のrelease-configは0.1.0のままです。
 
 アプリの停止を確認して最終v0.1.0を`/Applications/In-House Agent.app`へ配置し、codesign検証exit 0。GUIは起動していません。GitHubへのpush・Release公開・実Sparkle更新は未実施です。OS通知の手動設定を依頼したため、利用者から操作終了（または通知を後回しにして自動検証を再開）の返信を待ってGUIを再開します。
+
+## GitHubへの実公開
+
+`DERIVED_DATA=/tmp/inhouse-release-build scripts/release.sh 0.1.0 1 taisei1989/in-house-agent --publish` と、続く `0.1.1 2 ... --publish` はともに終了コード0。
+
+- [v0.1.0](https://github.com/taisei1989/in-house-agent/releases/tag/v0.1.0)：zip 4,047,517 bytes。
+- [v0.1.1](https://github.com/taisei1989/in-house-agent/releases/tag/v0.1.1)：zip 4,047,515 bytes。
+- 各バージョンのzipと署名済みappcastを公開。mainとタグをatomic pushし、公開タグのSHAを確認しました。
+- 認証ヘッダーなしのHTTPS取得で両zipのSHA-256が署名検証済みローカル成果物と一致。latest appcastもv0.1.1の署名済みファイルと完全一致。
+- `/Applications`のv0.1.0は、公開zip内の72ファイル・symlinkの内容と一致しています。v0.1.1を直接コピーせず、Sparkle実更新の開始点を維持しています。
+
+実Sparkle更新のGUI操作は、手動の通知設定を依頼した利用者から操作終了の返信があるまで停止しています。公開・署名・配信の成功は、実インストール更新の成功を意味しません。
