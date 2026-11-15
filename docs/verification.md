@@ -82,3 +82,9 @@ ModernInspectUI-8は保存済みの合成会話を使用し、`TEST SUCCEEDED`�
 修正後の実モデル検証では`list_directory → view_file`が独立した2件のcompletedになり、両方の引数と結果を保持し、既知ファイルへの回答が一致しました。終了コード0。関連Python回帰は`33 passed in 1.83s`です。
 
 最終英Runtimeの再実行は、通知設定の手動操作を依頼している間にGUIを停止するため、送信前に中断しました。機能の失敗ではありませんが、最終一括テスト成功とも扱いません。残ったテスト専用workspace設定は、該当fixtureのときだけ専用の既定Workspaceへ復元済みです。
+
+## 手動操作待ち時点の配布準備
+
+最終ツール相関修正を含むv0.1.0（build 1、zip 4,047,517 bytes）とv0.1.1（build 2、zip 4,047,531 bytes）をローカルに準備しました。双方Releaseビルド・codesign・zip/appcast署名検証が成功。v0.1.1の準備にはignoredな別configを使い、追跡中のrelease-configは0.1.0のままです。
+
+アプリの停止を確認して最終v0.1.0を`/Applications/In-House Agent.app`へ配置し、codesign検証exit 0。GUIは起動していません。GitHubへのpush・Release公開・実Sparkle更新は未実施です。OS通知の手動設定を依頼したため、利用者から操作終了（または通知を後回しにして自動検証を再開）の返信を待ってGUIを再開します。
