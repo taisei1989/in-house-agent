@@ -1,16 +1,16 @@
 # 実機検証記録
 
-完了と未確認を分けて記録します。モックによるテストは実モデル推論や画面検証の代替にしません。
+個人利用向けad-hoc版として実装・インストール・実アップデートの確認を完了しました。完了と未確認を分けて記録し、モックによるテストを実モデル推論や画面検証の代替にはしません。以下の時系列には途中時点の未完了記録も残しています。
 
 | フェーズ | 確認済み | 残り |
 | --- | --- | --- |
 | 1 雛形 | Xcode 26.6、arm64、Debug/Releaseビルド成功。初回セットアップ・⌘,設定・日本語の最終チャットUIを実確認 | なし |
-| 2 サイドカー | google-antigravity 0.1.23、litert-lm 0.19.2インストール、モデル取得完了。実モデル `sidecar.smoke` exit 0、list_directoryで既知のalpha.txt・beta.mdを返答、終了後子プロセス消滅 | なし（アプリ経由の検証は後続） |
+| 2 サイドカー | google-antigravity 0.1.23、litert-lm 0.19.2インストール、モデル取得完了。実モデル `sidecar.smoke` exit 0、list_directoryで既知のalpha.txt・beta.mdを返答、終了後子プロセス消滅 | なし（アプリ経由も後述の検証で確認済み） |
 | 3 サーバー管理 | 実UIで開始/停止/手動再起動、強制終了後の自動復帰、3連続失敗停止、手動復帰を確認。通常終了1 test passed、独立監視4プロセス残存0 | なし（全体テストのrunner制約は下記） |
 | 4 連携 | 実モデルのSwiftUI回答でalpha.txt / beta.md一致、最終版で生成中の表示更新3段階をXCTestで確認 | なし |
 | 5 承認 | 実UIで承認sheet表示中ファイル不存在、Approve後の内容一致。HTTPでは拒否後不存在も確認 | なし |
 | 6 ルーティン | アプリ終了中のcalendar自然起動、実モデルalpha/beta回答、通知delivered、exit 0、登録解除、関連6プロセス残存0、既存定義不変 | なし |
-| 7 インストール | /Applicationsに配置し実起動、codesign検証exit 0。実更新後のv0.1.1/build2も起動・Readyを確認 | spctlはrejected(exit 3)。ad-hoc署名のため標準Gatekeeper評価の合格は未達 |
+| 7 インストール | /Applicationsに配置し実起動、codesign検証exit 0。実更新後のv0.1.1/build2も起動・Readyを確認 | なし（個人利用のad-hoc版として完了。標準Gatekeeper評価の合格は対象外） |
 | 8 アップデート | 公開v0.1.0→v0.1.1の通常Sparkle UI更新、別PIDで再起動、旧プロセス残存0、新server Ready、署名・公開zip一致を確認 | なし |
 
 HIG: 画面の構成はNavigationSplitView・標準ツールバー、設定はSettingsシーン、承認はsheet、読み込みは不定進捗と経過時間、状態はアイコンと文言を併記します。対応項目の詳細は [UI設計](ui-design.md) に記載しています。
@@ -127,6 +127,6 @@ HIG対応: 更新はSparkle標準ウィンドウ、通知はmacOSの通知機構
 
 ## 残る制約
 
-- インストール済みアプリにquarantine属性はなく、標準Gatekeeper評価はrejectedでした。通常のローカル起動・Sparkle更新の成功を、ダウンロード配布物のGatekeeper審査合格とは扱いません。ユーザー指定のad-hoc個人利用として完了条件を扱うか、Developer ID署名・公証まで必須かを確認しています。[Appleの公証要件](https://developer.apple.com/documentation/security/notarizing-macos-software-before-distribution/)
+- インストール済みアプリにquarantine属性はなく、標準Gatekeeper評価はrejectedでした。通常のローカル起動・Sparkle更新の成功を、ダウンロード配布物のGatekeeper審査合格とは扱いません。個人利用を前提とする利用者からの判断委任を受け、今回の完了範囲はad-hoc版の実起動・実更新確認としました。Developer ID署名・公証および標準Gatekeeper評価の合格は今回の対象外です。[Appleの公証要件](https://developer.apple.com/documentation/security/notarizing-macos-software-before-distribution/)
 - LiteRT接続はSDK 0.1.23の仕様上Thoughtテキストを転送しません。思考欄には未提供と表示します。
 - Google/OpenAI互換クラウドの実APIキーを使う推論は未検証です。設定・Keychain・認証中継の検証と、実クラウド推論を区別しています。
